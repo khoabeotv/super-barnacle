@@ -1,0 +1,14 @@
+/node_modules
+/.next
+/.dist
+/package-lock.json
+/yarn-error.log
+/static/dist
+/.vscode
+
+.DS_Store
+
+client-cert.pem
+client-key.pem
+client.csr
+npm-debug.log*

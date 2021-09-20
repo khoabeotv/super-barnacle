@@ -1,0 +1,66 @@
+@import '~antd/dist/antd.min.css';
+
+#__next {
+  width: 100vw;
+  height: 100vh;
+}
+
+.ant-spin {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-wrapper {
+  padding: 20px 0;
+  max-width: 500px;
+}
+
+.form-container {
+  width: 500px;
+  max-width: 100vw;
+  padding: 16px;
+  border-radius: 20px;
+  background: #e5ded8;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.mgb-16 {
+  margin-bottom: 16px;
+}
+
+.mgt-16 {
+  margin-top: 16px;
+}
+
+.mgb-8 {
+  margin-bottom: 8px;
+}
+
+.mgb-5 {
+  margin-bottom: 5px;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.flex {
+  display: flex;
+}
