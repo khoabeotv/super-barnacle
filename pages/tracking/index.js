@@ -1,63 +1,73 @@
-import { CopyOutlined, StarFilled } from '@ant-design/icons';
+import { CheckCircleFilled, CopyOutlined, StarFilled } from '@ant-design/icons';
 import { Timeline } from 'antd';
 import TimelineItem from 'antd/lib/timeline/TimelineItem';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Copy from '../../components/Copy';
+import { useDeviceSize } from '../../hooks/useDeviceSize';
 
-const data = [
-  {
-    title: 'Thông tin shop',
-    value: 'shop_info',
-    items: [
-      { label: 'Tên shop', value: 'shop_name' },
-      { label: 'Số lượng đơn đã giao', value: 'total_order' },
-      { label: 'Tỉ lệ đơn thành công', value: 'success_orders' },
-      { label: 'Đánh giá từ người mua', value: 'rating_customer' }
-    ]
-  },
-  {
-    title: 'Thông tin đơn hàng',
-    value: 'order_info',
-    items: [
-      { label: 'Mã vận đơn', value: 'display_id' },
-      { label: 'Số lượng đơn đã giao', value: 'order_date' },
-      {
-        label: 'Tỉ lệ đơn thành công',
-        value: 'order_status',
-        style: { fontWeight: 500 }
-      },
-      {
-        label: 'Đánh giá từ người mua',
-        value: 'order_partner',
-        style: { fontWeight: 500 }
-      },
-      { label: 'Tracking ID', value: 'tracking_id', style: { fontWeight: 500 } }
-    ]
-  },
-  {
-    title: 'Thông tin người nhận',
-    value: 'customer_info',
-    items: [
-      {
-        label: 'Họ và tên',
-        value: 'customer_name',
-        style: { fontWeight: 500 }
-      },
-      {
-        label: 'Số điện thoại',
-        value: 'customer_phone',
-        style: { fontWeight: 500 }
-      },
-      {
-        label: 'Địa chỉ',
-        value: 'customer_address',
-        style: { fontWeight: 500 }
+const shopInfo = {
+  title: 'Thông tin shop',
+  value: 'shop_info',
+  items: [
+    { label: 'Tên shop', value: 'shop_name' },
+    { label: 'Số lượng đơn đã giao', value: 'total_order' },
+    { label: 'Tỉ lệ đơn thành công', value: 'success_orders' },
+    { label: 'Đánh giá từ người mua', value: 'rating_customer' }
+  ]
+};
+
+const orderInfo = {
+  title: 'Thông tin đơn hàng',
+  value: 'order_info',
+  items: [
+    { label: 'Mã vận đơn', value: 'display_id' },
+    { label: 'Số lượng đơn đã giao', value: 'order_date' },
+    {
+      label: 'Tỉ lệ đơn thành công',
+      value: 'order_status',
+      styles: { label: { desktop: { fontWeight: 500 } } }
+    },
+    {
+      label: 'Đánh giá từ người mua',
+      value: 'order_partner',
+      styles: { label: { desktop: { fontWeight: 500 } } }
+    },
+    {
+      label: 'Tracking ID',
+      value: 'tracking_id',
+      styles: { label: { desktop: { fontWeight: 500 } } }
+    }
+  ]
+};
+
+const customerInfo = {
+  title: 'Thông tin người nhận',
+  value: 'customer_info',
+  items: [
+    {
+      label: 'Họ và tên',
+      value: 'customer_name',
+      styles: { label: { desktop: { fontWeight: 500 } } }
+    },
+    {
+      label: 'Số điện thoại',
+      value: 'customer_phone',
+      styles: { label: { desktop: { fontWeight: 500 } } }
+    },
+    {
+      label: 'Địa chỉ',
+      value: 'customer_address',
+      styles: {
+        label: {
+          desktop: { fontWeight: 500 },
+          mobile: { whiteSpace: 'nowrap' }
+        }
       }
-    ]
-  }
-];
+    }
+  ]
+};
 
-const currenShop = {
+const currenShopInfo = {
   shop_name: 'Bunny Moon',
   total_order: '129',
   success_orders: '89',
@@ -116,91 +126,152 @@ const order = {
 };
 
 function Tracking() {
+  const [width] = useDeviceSize();
+
   return (
-    <div>
+    <div className="tracking-container">
       <div className="header-tracking">
         <div className="header-title">Theo dõi đơn hàng</div>
       </div>
       <div className="tracking-rows">
-        <div className="tracking-col" style={{ marginRight: '24px' }}>
-          {data.map((info) => {
-            return (
-              <div className="tracking-card" key={info.valua}>
-                <div className="tracking-box">
-                  <div
-                    className="tracking-title"
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                  >
-                    <div>{info.title}</div>
-                  </div>
-                  <div className="tracking-body">
-                    <div className="tracking-list">
-                      {info.items.map((item) => {
-                        let value;
-                        switch (info.value) {
-                          case 'shop_info':
-                            value = currenShop[item.value];
-                            break;
-                          case 'order_info':
-                            value = order[item.value];
-                            break;
-                          case 'customer_info':
-                            value = order.customer[item.value];
-                            break;
-                          default:
-                            break;
-                        }
-
-                        return (
-                          <div className="tracking-item">
-                            <div
-                              style={{
-                                fontSize: '14px',
-                                fontWeight: item?.style?.fontWeight
-                                  ? item.style.fontWeight
-                                  : 700
-                              }}
-                            >
-                              {item.label}
-                            </div>
-                            {item.value == 'display_id' ||
-                            item.value == 'tracking_id' ? (
-                              <Copy copyText={value}>
-                                <CopyOutlined />
-                                <span
-                                  style={{ marginLeft: '9.71px' }}
-                                  className="tracking-value"
-                                >
-                                  {value}
-                                </span>
-                              </Copy>
-                            ) : item.value == 'rating_customer' ? (
-                              <div className="tracking-value">
-                                {value}/5{' '}
-                                <StarFilled style={{ color: '#FFC53D' }} />
-                              </div>
-                            ) : (
-                              <div className="tracking-value">{value}</div>
-                            )}
-                          </div>
-                        );
-                      })}
+        <div className="tracking-col">
+          <div className="tracking-card">
+            <div className="tracking-box">
+              <div className="tracking-header">{shopInfo.title}</div>
+              <div className="tracking-body">
+                {width < 769 ? (
+                  <div>
+                    <div className="tracking-item">
+                      <div className="tracking-label">Tên shop</div>
+                      <div className="tracking-value">
+                        {currenShopInfo.shop_name}
+                      </div>
+                    </div>
+                    <div className="tracking-item">
+                      <div className="tracking-value">
+                        <div className="tracking-value">
+                          {currenShopInfo.rating_customer}/5 <StarFilled style={{ color: '#FFC53D' }} />
+                        </div>
+                      </div>
+                      <div className="tracking-value">
+                        {currenShopInfo.total_order} đơn ({currenShopInfo.success_orders}%) <CheckCircleFilled style={{ color: "#27AE60" }}/>
+                      </div>
                     </div>
                   </div>
+                ) : (
+                  <div className="tracking-list">
+                    {shopInfo.items.map((item) => {
+                      let value = currenShopInfo[item.value];
+                      return (
+                        <div className="tracking-item">
+                          <div
+                            style={{
+                              fontWeight: item?.styles
+                                ? item.styles.label.desktop.fontWeight
+                                : 700
+                            }}
+                            className="tracking-label"
+                          >
+                            {item.label}
+                          </div>
+                          {item.value == 'rating_customer' ? (
+                            <div className="tracking-value">
+                              {value}/5{' '}
+                              <StarFilled style={{ color: '#FFC53D' }} />
+                            </div>
+                          ) : (
+                            <div className="tracking-value">{value}</div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="tracking-card">
+            <div className="tracking-box">
+              <div className="tracking-header">{orderInfo.title}</div>
+              <div className="tracking-body">
+                <div className="tracking-list">
+                  {orderInfo.items.map((item) => {
+                    let value = order[item.value];
+                    return (
+                      <div className="tracking-item">
+                        <div
+                          style={{
+                            fontWeight: item?.style?.fontWeight
+                              ? item.styles.label.desktop.fontWeight
+                              : 700
+                          }}
+                          className="tracking-label"
+                        >
+                          {item.label}
+                        </div>
+                        {item.value == 'display_id' ||
+                        item.value == 'tracking_id' ? (
+                          <Copy copyText={value}>
+                            <CopyOutlined />
+                            <span
+                              style={{ marginLeft: '9.71px' }}
+                              className="tracking-value"
+                            >
+                              {value}
+                            </span>
+                          </Copy>
+                        ) : (
+                          <div className="tracking-value">{value}</div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
+          <div className="tracking-card">
+            <div className="tracking-box">
+              <div className="tracking-header">{customerInfo.title}</div>
+              <div className="tracking-body">
+                <div className="tracking-list">
+                  {customerInfo.items.map((item) => {
+                    let value = order.customer[item.value];
+                    return (
+                      <div className="tracking-item">
+                        <div
+                          className="tracking-label"
+                          style={{
+                            whiteSpace: item?.styles
+                              ? item?.styles?.label?.mobile?.whiteSpace
+                              : 'unset',
+                            fontWeight: item?.style?.fontWeight
+                              ? item.styles.label.desktop.fontWeight
+                              : 700
+                          }}
+                        >
+                          {item.label}
+                        </div>
+                        {item.value == 'rating_customer' ? (
+                          <div className="tracking-value">
+                            {value}/5{' '}
+                            <StarFilled style={{ color: '#FFC53D' }} />
+                          </div>
+                        ) : (
+                          <div className="tracking-value">{value}</div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="tracking-col" style={{ flex: 1 }}>
+        <div className="tracking-col">
           <div className="tracking-card" style={{ marginBottom: '24px' }}>
             <div className="tracking-box">
-              <div
-                className="tracking-title"
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-              >
-                <div>Trạng thái đơn hàng</div>
-              </div>
+              <div className="tracking-header">Trạng thái đơn hàng</div>
               <div
                 className="tracking-body"
                 style={{ padding: '16px 24px', flex: 1, height: '100%' }}
@@ -220,7 +291,9 @@ function Tracking() {
                               fontSize: '16px',
                               lineHeight: '1.5',
                               fontWeight: 'bold',
-                              color: active ? "rgba(0, 0, 0, 0.65)" : 'rgba(0, 0, 0, 0.45)'
+                              color: active
+                                ? 'rgba(0, 0, 0, 0.65)'
+                                : 'rgba(0, 0, 0, 0.45)'
                             }}
                           >
                             {item.status}
@@ -231,7 +304,9 @@ function Tracking() {
                                 marginBottom: '4px',
                                 fontSize: '16px',
                                 lineHeight: '1.5',
-                                color: active ? "rgba(0, 0, 0, 0.65)" : 'rgba(0, 0, 0, 0.45)'
+                                color: active
+                                  ? 'rgba(0, 0, 0, 0.65)'
+                                  : 'rgba(0, 0, 0, 0.45)'
                               }}
                             >
                               {item.note}
@@ -247,7 +322,9 @@ function Tracking() {
                               marginBottom: '4px',
                               fontSize: '16px',
                               lineHeight: '1.5',
-                              color: active ? "rgba(0, 0, 0, 0.65)" : 'rgba(0, 0, 0, 0.45)'
+                              color: active
+                                ? 'rgba(0, 0, 0, 0.65)'
+                                : 'rgba(0, 0, 0, 0.45)'
                             }}
                           >
                             {item.updated_at}

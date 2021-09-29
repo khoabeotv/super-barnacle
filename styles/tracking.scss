@@ -1,5 +1,12 @@
 @import "styles/utilities.scss";
 
+.tracking-container {
+  width: 100%;
+  @media screen and (max-width: $tablet) {
+    background-color: #f0f0f0;
+  }
+}
+
 .header-tracking {
   background: #506DAD;
   display: flex;
@@ -18,32 +25,37 @@
     color: $color-white;
     text-transform: uppercase;
   }
+  @media screen and (max-width: $tablet) {
+    position: relative;
+  }
 }
 
 .tracking-rows {
   display: flex;
   flex-direction: row;
   height: 100%;
-  padding: 104px 210px;
+  padding: 104px 162px;
+
+  .tracking-col {
+    width: 50%;
+    height: max-content;
+    margin: 0 12px;
+    @media screen and (max-width: $tablet){
+      width: 100% !important;
+      height: auto !important;
+      margin: 0;
+    }
+  }
 
   @media screen and (max-width: $fullhd) {
-    padding: 104px 105px;
+    padding: 104px 91px;
   }
 
-  @media screen and (max-width: $desktop) {
-    overflow: auto;
+  @media screen and (max-width: $tablet) {
     flex-direction: column !important;
-
-    .tracking-card {
-      &:last-child {
-        margin-bottom: 24px;
-      }
-    }
-
-    .tracking-col {
-      margin-right: 0 !important;
-    }
+    padding: 0;
   }
+
 }
 
 
@@ -52,29 +64,60 @@
   &:last-child {
     margin-bottom: 0;
   }
+  @media screen and (max-width: $tablet) {
+    margin-bottom: 6px;
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
   .tracking-box {
     border: 1px solid $color-grey-5;
     border-radius: 4px;
     overflow: hidden;
 
-    .tracking-title {
+    @media screen and (max-width: $tablet){
+      border: none;
+      border-radius: 0;
+    }
+
+    .tracking-header {
       background-color: $color-grey-3;
       padding: 13px 16px;
       color: $color-text;
       font-size: 14px;
       font-weight: 700;
       border-bottom: 1px solid $color-grey-5;
+      @media screen and (max-width: $tablet){
+        background-color: #fff;
+        border-bottom: none;
+        font-size: 12px;
+        line-height: 1.66;
+        text-transform: uppercase;
+        color: $color-text-hint;
+        padding: 16px 16px 0;
+      }
     }
     .tracking-body {
       background-color: $color-white;
       padding: 0 16px;
+      @media screen and (max-width: $tablet){
+        padding-bottom:16px;
+      }
     }
     .tracking-item {
       padding: 12px 0;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: flex-start;
       border-bottom: 1px solid $color-grey-5;
+      align-items: seft-start;
+      @media screen and (max-width: $tablet){
+        border-bottom: none;
+        padding: 8px 0;
+        &:last-child {
+          padding-bottom: 0 !important;
+        }
+      }
+
       &:last-child {
         border: none;
       }
@@ -82,10 +125,22 @@
         font-weight: bold;
         font-size: 14px;
         color: $color-text;
+        line-height: 1.57;
+        flex: 1;
+        @media screen and (max-width: $tablet){
+          font-weight: 500;
+          color: $color-text-hint;
+        }
       }
       .tracking-value {
         font-size: 14px;
         color: $color-text;
+        flex: 1;
+        text-align: right;
+        @media screen and (max-width: $tablet){
+          font-weight: 400;
+          color: $color-text-hint;
+        }
       }
     }
   }
@@ -102,15 +157,12 @@
   .ant-timeline-item {
     padding-bottom: 12px;
     .ant-timeline-item-content {
-      &:after {
+      &:not(.ant-timeline-item-last > .ant-timeline-item-content):after {
         content: '';
         border-bottom: 1px solid $color-grey-5;
         width: 100%;
         margin-top: 12px;
         display: block;
-      }
-      &:last-child::after {
-        content: none;
       }
     }
   }
