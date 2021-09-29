@@ -1,0 +1,117 @@
+@import "styles/utilities.scss";
+
+.header-tracking {
+  background: #506DAD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 56px;
+
+  .header-title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    color: $color-white;
+    text-transform: uppercase;
+  }
+}
+
+.tracking-rows {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 104px 210px;
+
+  @media screen and (max-width: $fullhd) {
+    padding: 104px 105px;
+  }
+
+  @media screen and (max-width: $desktop) {
+    overflow: auto;
+    flex-direction: column !important;
+
+    .tracking-card {
+      &:last-child {
+        margin-bottom: 24px;
+      }
+    }
+
+    .tracking-col {
+      margin-right: 0 !important;
+    }
+  }
+}
+
+
+.tracking-card {
+  margin-bottom: 24px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .tracking-box {
+    border: 1px solid $color-grey-5;
+    border-radius: 4px;
+    overflow: hidden;
+
+    .tracking-title {
+      background-color: $color-grey-3;
+      padding: 13px 16px;
+      color: $color-text;
+      font-size: 14px;
+      font-weight: 700;
+      border-bottom: 1px solid $color-grey-5;
+    }
+    .tracking-body {
+      background-color: $color-white;
+      padding: 0 16px;
+    }
+    .tracking-item {
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $color-grey-5;
+      &:last-child {
+        border: none;
+      }
+      .tracking-label {
+        font-weight: bold;
+        font-size: 14px;
+        color: $color-text;
+      }
+      .tracking-value {
+        font-size: 14px;
+        color: $color-text;
+      }
+    }
+  }
+}
+
+.tracking-timeline {
+  .ant-timeline-item-head {
+    background-color: $color-grey-5 !important;
+    border: none;
+  }
+  .ant-timeline-item-head-green {
+    background-color: #27AE60 !important;
+  }
+  .ant-timeline-item {
+    padding-bottom: 12px;
+    .ant-timeline-item-content {
+      &:after {
+        content: '';
+        border-bottom: 1px solid $color-grey-5;
+        width: 100%;
+        margin-top: 12px;
+        display: block;
+      }
+      &:last-child::after {
+        content: none;
+      }
+    }
+  }
+}
