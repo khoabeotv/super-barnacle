@@ -166,4 +166,94 @@
       }
     }
   }
+  .tracking-status {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+    @media screen and (max-width: $tablet){
+      font-weight: 500;
+      color: $color-text-hint;
+    }
+  }
+  .tracking-status {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+    @media screen and (max-width: $tablet){
+      font-weight: 500;
+      color: $color-text-hint;
+    }
+  }
+  .tracking-status {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+    @media screen and (max-width: $tablet){
+      font-weight: 500;
+    }
+  }
+  .tracking-note {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  @media screen and (max-width: $tablet){
+    font-size: 12px;
+    line-height: 1.66;
+  }
+}
+
+.tracking-modal {
+  .ant-modal-content {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid $color-grey-5;
+  }
+  .ant-modal-header {
+    padding: 13px 16px;
+    background-color: $color-grey-3;
+    border-bottom: 1px solid $color-grey-5;
+  }
+  .ant-modal-title {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.57;
+    font-weight: 700;
+    color: $color-text;
+  }
+  .ant-modal-body {
+    padding: 16px;
+  }
+  .ant-modal-footer {
+    border-top: 1px solid $color-grey-5;
+    padding: 12px 16px;
+  }
+  .tracking-input {
+    border: 1px solid $color-grey-5;
+    border-radius: 4px;
+
+    &:focus {
+      border-color: #40a9ff !important;
+      outline: none;
+    }
+  }
+  .tracking-input-square {
+    width: 40px !important;
+    height: 40px;
+    margin-right: 8px;
+    padding: 0;
+  }
+  .ant-btn {
+    background: #1890FF;
+    border: 1px solid #1890FF;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 2px;
+    color: $color-white;
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
