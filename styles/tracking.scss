@@ -1,0 +1,259 @@
+@import "styles/utilities.scss";
+
+.tracking-container {
+  width: 100%;
+  @media screen and (max-width: $tablet) {
+    background-color: #f0f0f0;
+  }
+}
+
+.header-tracking {
+  background: #506DAD;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 56px;
+
+  .header-title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    color: $color-white;
+    text-transform: uppercase;
+  }
+  @media screen and (max-width: $tablet) {
+    position: relative;
+  }
+}
+
+.tracking-rows {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  padding: 104px 162px;
+
+  .tracking-col {
+    width: 50%;
+    height: max-content;
+    margin: 0 12px;
+    @media screen and (max-width: $tablet){
+      width: 100% !important;
+      height: auto !important;
+      margin: 0;
+    }
+  }
+
+  @media screen and (max-width: $fullhd) {
+    padding: 104px 91px;
+  }
+
+  @media screen and (max-width: $tablet) {
+    flex-direction: column !important;
+    padding: 0;
+  }
+
+}
+
+
+.tracking-card {
+  margin-bottom: 24px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  @media screen and (max-width: $tablet) {
+    margin-bottom: 6px;
+    &:last-child {
+      margin-bottom: 6px;
+    }
+  }
+  .tracking-box {
+    border: 1px solid $color-grey-5;
+    border-radius: 4px;
+    overflow: hidden;
+
+    @media screen and (max-width: $tablet){
+      border: none;
+      border-radius: 0;
+    }
+
+    .tracking-header {
+      background-color: $color-grey-3;
+      padding: 13px 16px;
+      color: $color-text;
+      font-size: 14px;
+      font-weight: 700;
+      border-bottom: 1px solid $color-grey-5;
+      @media screen and (max-width: $tablet){
+        background-color: #fff;
+        border-bottom: none;
+        font-size: 12px;
+        line-height: 1.66;
+        text-transform: uppercase;
+        color: $color-text-hint;
+        padding: 16px 16px 0;
+      }
+    }
+    .tracking-body {
+      background-color: $color-white;
+      padding: 0 16px;
+      @media screen and (max-width: $tablet){
+        padding-bottom:16px;
+      }
+    }
+    .tracking-item {
+      padding: 12px 0;
+      display: flex;
+      align-items: flex-start;
+      border-bottom: 1px solid $color-grey-5;
+      align-items: seft-start;
+      @media screen and (max-width: $tablet){
+        border-bottom: none;
+        padding: 8px 0;
+        &:last-child {
+          padding-bottom: 0 !important;
+        }
+      }
+
+      &:last-child {
+        border: none;
+      }
+      .tracking-label {
+        font-weight: bold;
+        font-size: 14px;
+        color: $color-text;
+        line-height: 1.57;
+        flex: 1;
+        @media screen and (max-width: $tablet){
+          font-weight: 500;
+          color: $color-text-hint;
+        }
+      }
+      .tracking-value {
+        font-size: 14px;
+        color: $color-text;
+        flex: 1;
+        text-align: right;
+        @media screen and (max-width: $tablet){
+          font-weight: 400;
+          color: $color-text-hint;
+        }
+      }
+    }
+  }
+}
+
+.tracking-timeline {
+  .ant-timeline-item-head {
+    background-color: $color-grey-5 !important;
+    border: none;
+  }
+  .ant-timeline-item-head-green {
+    background-color: #27AE60 !important;
+  }
+  .ant-timeline-item {
+    padding-bottom: 12px;
+    .ant-timeline-item-content {
+      &:not(.ant-timeline-item-last > .ant-timeline-item-content):after {
+        content: '';
+        border-bottom: 1px solid $color-grey-5;
+        width: 100%;
+        margin-top: 12px;
+        display: block;
+      }
+    }
+  }
+  .tracking-status {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+    @media screen and (max-width: $tablet){
+      font-weight: 500;
+      color: $color-text-hint;
+    }
+  }
+  .tracking-status {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+    @media screen and (max-width: $tablet){
+      font-weight: 500;
+      color: $color-text-hint;
+    }
+  }
+  .tracking-status {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: bold;
+    @media screen and (max-width: $tablet){
+      font-weight: 500;
+    }
+  }
+  .tracking-note {
+    margin-bottom: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  @media screen and (max-width: $tablet){
+    font-size: 12px;
+    line-height: 1.66;
+  }
+}
+
+.tracking-modal {
+  .ant-modal-content {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid $color-grey-5;
+  }
+  .ant-modal-header {
+    padding: 13px 16px;
+    background-color: $color-grey-3;
+    border-bottom: 1px solid $color-grey-5;
+  }
+  .ant-modal-title {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.57;
+    font-weight: 700;
+    color: $color-text;
+  }
+  .ant-modal-body {
+    padding: 16px;
+  }
+  .ant-modal-footer {
+    border-top: 1px solid $color-grey-5;
+    padding: 12px 16px;
+  }
+  .tracking-input {
+    border: 1px solid $color-grey-5;
+    border-radius: 4px;
+
+    &:focus {
+      border-color: #40a9ff !important;
+      outline: none;
+    }
+  }
+  .tracking-input-square {
+    width: 40px !important;
+    height: 40px;
+    margin-right: 8px;
+    padding: 0;
+  }
+  .ant-btn {
+    background: #1890FF;
+    border: 1px solid #1890FF;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 2px;
+    color: $color-white;
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

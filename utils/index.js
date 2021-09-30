@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const fuzzySearch = (pattern, string) =>
   fuzzyMatch(pattern, string) !== null;
 
@@ -62,4 +64,24 @@ export const convertVN = (str, withoutSpecChar = false) => {
   } else {
     return str.replace(/[^a-zA-Z0-9/, ]/g, '');
   }
+};
+
+export const formatDateTime = (time, full, format) => {
+  let timeAndZone =
+    typeof time === 'number' ? moment(time, 'X') : moment.utc(time);
+  timeAndZone = timeAndZone.utcOffset(7);
+  const datetime = moment(timeAndZone);
+  if (full) return datetime.format('HH:mm DD/MM/YYYY');
+  if (format) return datetime.format(format);
+  return datetime.calendar(null, {
+    sameDay: 'HH:mm',
+    nextDay: `HH:mm [ngày mai]`,
+    nextWeek: 'HH:mm DD/MM',
+    lastDay: `HH:mm [hôm qua]`,
+    lastWeek: 'HH:mm DD/MM',
+    sameElse: function (now) {
+      if (this.isSame(now, 'year')) return 'HH:mm DD/MM';
+      return 'HH:mm DD/MM/YYYY';
+    }
+  });
 };
