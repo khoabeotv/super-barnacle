@@ -15,7 +15,7 @@ const getData = (id, phone_number) => {
       params: { id, phone_number }
     })
     .then((res) => res.data)
-    .catch(() => ({ success: false }));
+    .catch(() => ({ success: false, require_phone_number: true }));
 };
 
 const shopInfo = {
