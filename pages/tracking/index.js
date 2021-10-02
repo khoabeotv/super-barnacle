@@ -97,6 +97,11 @@ function Tracking(props) {
 
   return (
     <>
+      <Head>
+        <title>Pancake Tracking</title>
+        <link rel="icon" href="/logo.png" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       {process.env.NODE_ENV === 'production' && process.browser ? (
         <Head>
           <script

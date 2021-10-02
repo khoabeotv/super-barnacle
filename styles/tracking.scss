@@ -1,4 +1,4 @@
-@import "styles/utilities.scss";
+@import 'styles/utilities.scss';
 
 .tracking-container {
   width: 100%;
@@ -8,7 +8,7 @@
 }
 
 .header-tracking {
-  background: #506DAD;
+  background: #506dad;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +40,7 @@
     width: 50%;
     height: max-content;
     margin: 0 12px;
-    @media screen and (max-width: $tablet){
+    @media screen and (max-width: $tablet) {
       width: 100% !important;
       height: auto !important;
       margin: 0;
@@ -55,9 +55,7 @@
     flex-direction: column !important;
     padding: 0;
   }
-
 }
-
 
 .tracking-card {
   margin-bottom: 24px;
@@ -75,7 +73,7 @@
     border-radius: 4px;
     overflow: hidden;
 
-    @media screen and (max-width: $tablet){
+    @media screen and (max-width: $tablet) {
       border: none;
       border-radius: 0;
     }
@@ -87,7 +85,7 @@
       font-size: 14px;
       font-weight: 700;
       border-bottom: 1px solid $color-grey-5;
-      @media screen and (max-width: $tablet){
+      @media screen and (max-width: $tablet) {
         background-color: #fff;
         border-bottom: none;
         font-size: 12px;
@@ -100,8 +98,8 @@
     .tracking-body {
       background-color: $color-white;
       padding: 0 16px;
-      @media screen and (max-width: $tablet){
-        padding-bottom:16px;
+      @media screen and (max-width: $tablet) {
+        padding-bottom: 16px;
       }
     }
     .tracking-item {
@@ -110,7 +108,7 @@
       align-items: flex-start;
       border-bottom: 1px solid $color-grey-5;
       align-items: seft-start;
-      @media screen and (max-width: $tablet){
+      @media screen and (max-width: $tablet) {
         border-bottom: none;
         padding: 8px 0;
         &:last-child {
@@ -127,7 +125,7 @@
         color: $color-text;
         line-height: 1.57;
         flex: 1;
-        @media screen and (max-width: $tablet){
+        @media screen and (max-width: $tablet) {
           font-weight: 500;
           color: $color-text-hint;
         }
@@ -137,9 +135,8 @@
         color: $color-text;
         flex: 1;
         text-align: right;
-        @media screen and (max-width: $tablet){
+        @media screen and (max-width: $tablet) {
           font-weight: 400;
-          color: $color-text-hint;
         }
       }
     }
@@ -152,7 +149,7 @@
     border: none;
   }
   .ant-timeline-item-head-green {
-    background-color: #27AE60 !important;
+    background-color: #27ae60 !important;
   }
   .ant-timeline-item {
     padding-bottom: 12px;
@@ -171,7 +168,7 @@
     font-size: 16px;
     line-height: 1.5;
     font-weight: bold;
-    @media screen and (max-width: $tablet){
+    @media screen and (max-width: $tablet) {
       font-weight: 500;
       color: $color-text-hint;
     }
@@ -181,7 +178,7 @@
     font-size: 16px;
     line-height: 1.5;
     font-weight: bold;
-    @media screen and (max-width: $tablet){
+    @media screen and (max-width: $tablet) {
       font-weight: 500;
       color: $color-text-hint;
     }
@@ -191,7 +188,7 @@
     font-size: 16px;
     line-height: 1.5;
     font-weight: bold;
-    @media screen and (max-width: $tablet){
+    @media screen and (max-width: $tablet) {
       font-weight: 500;
     }
   }
@@ -201,7 +198,7 @@
     line-height: 1.5;
     font-weight: 400;
   }
-  @media screen and (max-width: $tablet){
+  @media screen and (max-width: $tablet) {
     font-size: 12px;
     line-height: 1.66;
   }
@@ -248,8 +245,8 @@
     padding: 0;
   }
   .ant-btn {
-    background: #1890FF;
-    border: 1px solid #1890FF;
+    background: #1890ff;
+    border: 1px solid #1890ff;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
     border-radius: 2px;
     color: $color-white;
