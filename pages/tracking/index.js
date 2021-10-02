@@ -1,41 +1,43 @@
 import { CheckCircleFilled, CopyOutlined, StarFilled } from '@ant-design/icons';
 import { Button, Input, Modal, Timeline } from 'antd';
 import TimelineItem from 'antd/lib/timeline/TimelineItem';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import OtpInput from 'react-otp-input';
 import Copy from '../../components/Copy';
 import { useDeviceSize } from '../../hooks/useDeviceSize';
+import { formatDateTime } from 'utils';
+import ReactGA from 'react-ga';
+
+const getData = (id, phone_number) => {
+  return axios
+    .get(`${API_BASE}/tracking`, {
+      params: { id, phone_number }
+    })
+    .then((res) => res.data)
+    .catch(() => ({ success: false }));
+};
 
 const shopInfo = {
   title: 'Thông tin shop',
   value: 'shop_info',
-  items: [
-    { label: 'Tên shop', value: 'shop_name' },
-    { label: 'Số lượng đơn đã giao', value: 'total_order' },
-    { label: 'Tỉ lệ đơn thành công', value: 'success_orders' },
-    { label: 'Đánh giá từ người mua', value: 'rating_customer' }
-  ]
+  items: [{ label: 'Tên shop', value: 'shop_name' }]
 };
 
 const orderInfo = {
   title: 'Thông tin đơn hàng',
   value: 'order_info',
   items: [
-    { label: 'Mã vận đơn', value: 'display_id' },
-    { label: 'Số lượng đơn đã giao', value: 'order_date' },
+    { label: 'Mã vận đơn', value: 'extend_code' },
+    { label: 'Ngày đặt hàng', value: 'inserted_at' },
     {
-      label: 'Tỉ lệ đơn thành công',
-      value: 'order_status',
+      label: 'Trạng thái đơn hàng',
+      value: 'status',
       styles: { label: { desktop: { fontWeight: 500 } } }
     },
     {
-      label: 'Đánh giá từ người mua',
-      value: 'order_partner',
-      styles: { label: { desktop: { fontWeight: 500 } } }
-    },
-    {
-      label: 'Tracking ID',
-      value: 'tracking_id',
+      label: 'Đơn vị vận chuyển',
+      value: 'partner_name',
       styles: { label: { desktop: { fontWeight: 500 } } }
     }
   ]
@@ -47,17 +49,17 @@ const customerInfo = {
   items: [
     {
       label: 'Họ và tên',
-      value: 'customer_name',
+      value: 'bill_full_name',
       styles: { label: { desktop: { fontWeight: 500 } } }
     },
     {
       label: 'Số điện thoại',
-      value: 'customer_phone',
+      value: 'bill_phone_number',
       styles: { label: { desktop: { fontWeight: 500 } } }
     },
     {
       label: 'Địa chỉ',
-      value: 'customer_address',
+      value: 'address',
       styles: {
         label: {
           desktop: { fontWeight: 500 },
@@ -68,71 +70,18 @@ const customerInfo = {
   ]
 };
 
-const currenShopInfo = {
-  shop_name: 'Bunny Moon',
-  total_order: '129',
-  success_orders: '89',
-  rating_customer: '4.8'
-};
-
-const order = {
-  display_id: 8703656590,
-  order_date: '12:55 , 18/07/2021',
-  order_status: 'Giao hàng thành công',
-  order_partner: 'Viettel Post',
-  tracking_id: 2321321321,
-  customer: {
-    customer_name: 'Hà Hành',
-    customer_phone: '+84090908409',
-    customer_address: 'Số 1A Ng. 165 P. Thái Hà, Láng Hạ, Đống Đa, Hà Nội'
-  },
-  extend_updates: [
-    {
-      updated_at: '15:55, Chủ nhật 18/07/2021',
-      status: 'Giao hàng thành công',
-      note: '',
-      location: ''
-    },
-    {
-      updated_at: '15:55, Chủ nhật 18/07/2021',
-      status: 'Đang vận chuyển',
-      note: 'Viettel đang vận chuyển',
-      location: ''
-    },
-    {
-      updated_at: '15:55, Chủ nhật 18/07/2021',
-      status: 'Đơn đã xuất khỏi kho',
-      note: 'Đơn hàng đã được xuất kho 20-HNI Tu Liem LMhub',
-      location: ''
-    },
-    {
-      updated_at: '15:55, Chủ nhật 18/07/2021',
-      status: 'Hoàn tất đóng gói',
-      note: 'Đóng gói thành công',
-      location: ''
-    },
-    {
-      updated_at: '15:55, Chủ nhật 18/07/2021',
-      status: 'Đang lấy hàng',
-      note: '',
-      location: ''
-    },
-    {
-      updated_at: '15:55, Chủ nhật 18/07/2021',
-      status: 'Đã xử lý',
-      note: 'Đơn hàng của bạn đã được xác nhận',
-      location: ''
-    }
-  ]
-};
-
-let success = false;
-
-function Tracking() {
+function Tracking(props) {
   const [width] = useDeviceSize();
   const [fourDigitsPhone, setFourDigitsPhone] = useState('');
-  const [verifyPhone] = useState(true);
-  const [verifyOTP] = useState(false);
+  const [verifyOTP] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [order, setOrder] = useState(props.data);
+
+  useEffect(() => {
+    ReactGA.initialize('G-4D7G1SVR9H');
+    ReactGA.set({ page: window.location.pathname });
+    ReactGA.pageview(window.location.pathname);
+  }, []);
 
   const renderTitle = () => {
     if (verifyOTP) {
@@ -145,12 +94,19 @@ function Tracking() {
     setFourDigitsPhone(fourDigits);
   };
 
+  const onConfirm = async () => {
+    setLoading(true);
+    const res = await getData(props.id, fourDigitsPhone);
+    setOrder(res);
+    setLoading(false);
+  };
+
   return (
     <div className="tracking-container">
       <div className="header-tracking">
         <div className="header-title">Theo dõi đơn hàng</div>
       </div>
-      {success ? (
+      {!order.require_phone_number ? (
         <div className="tracking-rows">
           <div className="tracking-col">
             <div className="tracking-card">
@@ -161,11 +117,9 @@ function Tracking() {
                     <div>
                       <div className="tracking-item">
                         <div className="tracking-label">Tên shop</div>
-                        <div className="tracking-value">
-                          {currenShopInfo.shop_name}
-                        </div>
+                        <div className="tracking-value">{order.shop_name}</div>
                       </div>
-                      <div className="tracking-item">
+                      {/* <div className="tracking-item">
                         <div className="tracking-value">
                           <div className="tracking-value">
                             {currenShopInfo.rating_customer}/5{' '}
@@ -177,12 +131,12 @@ function Tracking() {
                           {currenShopInfo.success_orders}%){' '}
                           <CheckCircleFilled style={{ color: '#27AE60' }} />
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   ) : (
                     <div className="tracking-list">
                       {shopInfo.items.map((item) => {
-                        let value = currenShopInfo[item.value];
+                        let value = order[item.value];
                         return (
                           <div className="tracking-item">
                             <div
@@ -230,8 +184,7 @@ function Tracking() {
                           >
                             {item.label}
                           </div>
-                          {item.value == 'display_id' ||
-                          item.value == 'tracking_id' ? (
+                          {item.value == 'extend_code' ? (
                             <Copy copyText={value}>
                               <CopyOutlined />
                               <span
@@ -241,6 +194,10 @@ function Tracking() {
                                 {value}
                               </span>
                             </Copy>
+                          ) : item.value == 'inserted_at' ? (
+                            <div className="tracking-value">
+                              {formatDateTime(value, true)}
+                            </div>
                           ) : (
                             <div className="tracking-value">{value}</div>
                           )}
@@ -257,7 +214,7 @@ function Tracking() {
                 <div className="tracking-body">
                   <div className="tracking-list">
                     {customerInfo.items.map((item) => {
-                      let value = order.customer[item.value];
+                      let value = order[item.value];
                       return (
                         <div className="tracking-item">
                           <div
@@ -298,8 +255,8 @@ function Tracking() {
                   style={{ padding: '16px 24px', flex: 1, height: '100%' }}
                 >
                   <Timeline className="tracking-timeline" mode="left">
-                    {order.extend_updates.map((item, index) => {
-                      const active = false;
+                    {order.extend_update.map((item, index) => {
+                      const active = index == 0;
                       return (
                         <TimelineItem
                           color={active ? 'green' : ''}
@@ -328,6 +285,18 @@ function Tracking() {
                                 {item.note}
                               </div>
                             )}
+                            {item.location && (
+                              <div
+                                className="tracking-note"
+                                style={{
+                                  color: active
+                                    ? 'rgba(0, 0, 0, 0.65)'
+                                    : 'rgba(0, 0, 0, 0.45)'
+                                }}
+                              >
+                                {item.location}
+                              </div>
+                            )}
                             <div
                               style={{
                                 fontSize: '16px',
@@ -337,7 +306,7 @@ function Tracking() {
                                   : 'rgba(0, 0, 0, 0.45)'
                               }}
                             >
-                              {item.updated_at}
+                              {formatDateTime(item.updated_at, true)}
                             </div>
                           </div>
                         </TimelineItem>
@@ -349,75 +318,94 @@ function Tracking() {
             </div>
           </div>
         </div>
-      ) : null}
-      <Modal
-        title={renderTitle()}
-        wrapClassName="tracking-modal"
-        visible={true}
-        closable={false}
-        footer={
-          verifyOTP ? (
-            <Button size="large" block>
+      ) : (
+        <Modal
+          title={renderTitle()}
+          wrapClassName="tracking-modal"
+          visible={true}
+          closable={false}
+          footer={
+            <Button size="large" block onClick={onConfirm} loading={loading}>
               Tra cứu
             </Button>
-          ) : (
-            <Button size="large" block>
-              Tiếp tục
-            </Button>
-          )
-        }
-      >
-        {!verifyOTP ? (
-          <div style={{ width: '100%' }}>
-            <Input
-              className="tracking-input"
-              style={{ padding: '9px 16px' }}
-              placeholder="Nhập mã vận đơn"
-            />
-            {verifyPhone && (
-              <>
-                <div style={{ margin: '16px 0 12px' }}>
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      lineHeight: '22px',
-                      color: 'rgba(0, 0, 0, 0.65)'
-                    }}
-                  >
-                    Xác nhận quyền truy cập đơn hàng
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      lineHeight: '20px',
-                      color: 'rgba(0, 0, 0, 0.45)'
-                    }}
-                  >
-                    * Nhập 4 số cuối số điện thoại đặt hàng
-                  </div>
+          }
+        >
+          {!verifyOTP ? (
+            <div style={{ width: '100%' }}>
+              <Input
+                className="tracking-input"
+                style={{ padding: '9px 16px' }}
+                placeholder="Nhập mã vận đơn"
+              />
+              <div style={{ margin: '16px 0 12px' }}>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    lineHeight: '22px',
+                    color: 'rgba(0, 0, 0, 0.65)'
+                  }}
+                >
+                  Xác nhận quyền truy cập đơn hàng
                 </div>
-                <OtpInput
-                  isInputNum
-                  value={fourDigitsPhone}
-                  onChange={handlePhoneNumberChange}
-                  inputStyle="tracking-input tracking-input-square"
-                />
-              </>
-            )}
-          </div>
-        ) : (
-          <div className="flex-center">
-            <OtpInput
-              isInputNum
-              value={fourDigitsPhone}
-              onChange={handlePhoneNumberChange}
-              inputStyle="tracking-input tracking-input-square"
-            />
-          </div>
-        )}
-      </Modal>
+                <div
+                  style={{
+                    fontSize: '14px',
+                    lineHeight: '20px',
+                    color: 'rgba(0, 0, 0, 0.45)'
+                  }}
+                >
+                  * Nhập 4 số cuối số điện thoại đặt hàng
+                </div>
+              </div>
+              <OtpInput
+                hasErrored={true}
+                shouldAutoFocus={true}
+                isInputNum
+                value={fourDigitsPhone}
+                onChange={handlePhoneNumberChange}
+                inputStyle="tracking-input tracking-input-square"
+              />
+            </div>
+          ) : (
+            <div className="flex-center flex-column">
+              <div
+                style={{
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  color: 'rgba(0, 0, 0, 0.45)',
+                  marginBottom: 12
+                }}
+              >
+                * Nhập 4 số cuối số điện thoại đặt hàng
+              </div>
+              <OtpInput
+                shouldAutoFocus={true}
+                isInputNum
+                value={fourDigitsPhone}
+                onChange={handlePhoneNumberChange}
+                inputStyle="tracking-input tracking-input-square"
+              />
+              {!order.success && (
+                <div className="error-text" style={{ marginTop: 12 }}>
+                  Số điện thoại không chính xác
+                </div>
+              )}
+            </div>
+          )}
+        </Modal>
+      )}
     </div>
   );
 }
 
 export default Tracking;
+
+export async function getServerSideProps(context) {
+  const id = context.query.id || null;
+  let res = { require_phone_number: true };
+  if (id) res = await getData(id);
+
+  return {
+    props: { id, data: res }
+  };
+}
