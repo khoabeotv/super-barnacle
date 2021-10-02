@@ -92,6 +92,7 @@
         line-height: 1.66;
         text-transform: uppercase;
         color: $color-text-hint;
+        font-weight: normal;
         padding: 16px 16px 0;
       }
     }
@@ -125,8 +126,8 @@
         color: $color-text;
         line-height: 1.57;
         flex: 1;
+        font-weight: 500;
         @media screen and (max-width: $tablet) {
-          font-weight: 500;
           color: $color-text-hint;
         }
       }

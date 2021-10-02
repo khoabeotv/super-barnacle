@@ -32,13 +32,11 @@ const orderInfo = {
     { label: 'Ngày đặt hàng', value: 'inserted_at' },
     {
       label: 'Trạng thái đơn hàng',
-      value: 'status',
-      styles: { label: { desktop: { fontWeight: 500 } } }
+      value: 'status'
     },
     {
       label: 'Đơn vị vận chuyển',
-      value: 'partner_name',
-      styles: { label: { desktop: { fontWeight: 500 } } }
+      value: 'partner_name'
     }
   ]
 };
@@ -49,20 +47,17 @@ const customerInfo = {
   items: [
     {
       label: 'Họ và tên',
-      value: 'bill_full_name',
-      styles: { label: { desktop: { fontWeight: 500 } } }
+      value: 'bill_full_name'
     },
     {
       label: 'Số điện thoại',
-      value: 'bill_phone_number',
-      styles: { label: { desktop: { fontWeight: 500 } } }
+      value: 'bill_phone_number'
     },
     {
       label: 'Địa chỉ',
       value: 'address',
       styles: {
         label: {
-          desktop: { fontWeight: 500 },
           mobile: { whiteSpace: 'nowrap' }
         }
       }
@@ -159,16 +154,7 @@ function Tracking(props) {
                           let value = order[item.value];
                           return (
                             <div className="tracking-item">
-                              <div
-                                style={{
-                                  fontWeight: item?.styles
-                                    ? item.styles.label.desktop.fontWeight
-                                    : 700
-                                }}
-                                className="tracking-label"
-                              >
-                                {item.label}
-                              </div>
+                              <div className="tracking-label">{item.label}</div>
                               {item.value == 'rating_customer' ? (
                                 <div className="tracking-value">
                                   {value}/5{' '}
@@ -194,16 +180,7 @@ function Tracking(props) {
                         let value = order[item.value];
                         return (
                           <div className="tracking-item">
-                            <div
-                              style={{
-                                fontWeight: item?.style?.fontWeight
-                                  ? item.styles.label.desktop.fontWeight
-                                  : 700
-                              }}
-                              className="tracking-label"
-                            >
-                              {item.label}
-                            </div>
+                            <div className="tracking-label">{item.label}</div>
                             {item.value == 'extend_code' ? (
                               <Copy copyText={value}>
                                 <CopyOutlined />
@@ -242,10 +219,7 @@ function Tracking(props) {
                               style={{
                                 whiteSpace: item?.styles
                                   ? item?.styles?.label?.mobile?.whiteSpace
-                                  : 'unset',
-                                fontWeight: item?.style?.fontWeight
-                                  ? item.styles.label.desktop.fontWeight
-                                  : 700
+                                  : 'unset'
                               }}
                             >
                               {item.label}
