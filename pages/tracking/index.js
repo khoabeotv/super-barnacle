@@ -206,7 +206,7 @@ function Tracking(props) {
                                 {formatDateTime(value, true)}
                               </div>
                             ) : (
-                              <div className="tracking-value">{}</div>
+                              <div className="tracking-value">{value}</div>
                             )}
                           </div>
                         );
@@ -416,11 +416,12 @@ export async function getServerSideProps(context) {
   if (id) res = await getData(id);
   let trans = null;
   let locale = 'en';
-  if (typeof window === 'undefined' || (process.browser && res?.country_code)) {
+  const isServer = typeof window === 'undefined'
+  if (isServer && res?.country_code) {
     trans = await getTranslation(getLangFromCountryCode(res?.country_code));
     locale = getLangFromCountryCode(res?.country_code);
   }
   return {
-    props: { id, data: res, trans, locale }
+    props: { id, data: res, trans, locale, isServer }
   };
 }
