@@ -85,3 +85,14 @@ export const formatDateTime = (time, full, format) => {
     }
   });
 };
+
+export const getLangFromCountryCode = (countryCode) => {
+  switch (countryCode) {
+    case '84':
+      return 'vi'
+    case '62':
+      return 'id'
+    default:
+      return 'en'
+  }
+}

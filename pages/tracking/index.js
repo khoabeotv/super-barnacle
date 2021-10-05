@@ -1,13 +1,15 @@
-import { CheckCircleFilled, CopyOutlined, StarFilled } from '@ant-design/icons';
+import { CopyOutlined, StarFilled } from '@ant-design/icons';
 import { Button, Input, Modal, Timeline } from 'antd';
 import TimelineItem from 'antd/lib/timeline/TimelineItem';
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Head from 'next/head';
+import React, { useState } from 'react';
 import OtpInput from 'react-otp-input';
+import { formatDateTime } from 'utils';
 import Copy from '../../components/Copy';
 import { useDeviceSize } from '../../hooks/useDeviceSize';
-import { formatDateTime } from 'utils';
-import Head from 'next/head';
+import i18n, { getTranslation } from '../../i18n';
+import { getLangFromCountryCode } from '../../utils';
 
 const getData = (id, phone_number) => {
   return axios
@@ -74,9 +76,9 @@ function Tracking(props) {
 
   const renderTitle = () => {
     if (verifyOTP) {
-      return <div style={{ textAlign: 'center' }}>Xác thực quyền truy cập</div>;
+      return <div style={{ textAlign: 'center' }}>{i18n.t("Xác thực quyền truy cập")}</div>;
     }
-    return <div>Tìm kiếm đơn hàng</div>;
+    return <div>{i18n.t('Tìm kiếm đơn hàng')}</div>;
   };
 
   const handlePhoneNumberChange = (fourDigits) => {
@@ -117,19 +119,23 @@ function Tracking(props) {
       ) : null}
       <div className="tracking-container">
         <div className="header-tracking">
-          <div className="header-title">Theo dõi đơn hàng</div>
+          <div className="header-title">{i18n.t('Theo dõi đơn hàng')}</div>
         </div>
         {!order.require_phone_number ? (
           <div className="tracking-rows">
             <div className="tracking-col">
               <div className="tracking-card">
                 <div className="tracking-box">
-                  <div className="tracking-header">{shopInfo.title}</div>
+                  <div className="tracking-header">
+                    {i18n.t(shopInfo.title)}
+                  </div>
                   <div className="tracking-body">
                     {width < 769 ? (
                       <div>
                         <div className="tracking-item">
-                          <div className="tracking-label">Tên shop</div>
+                          <div className="tracking-label">
+                            {i18n.t('Tên shop')}
+                          </div>
                           <div className="tracking-value">
                             {order.shop_name}
                           </div>
@@ -153,8 +159,10 @@ function Tracking(props) {
                         {shopInfo.items.map((item) => {
                           let value = order[item.value];
                           return (
-                            <div className="tracking-item">
-                              <div className="tracking-label">{item.label}</div>
+                            <div className="tracking-item" key={item.value}>
+                              <div className="tracking-label">
+                                {i18n.t(item.label)}
+                              </div>
                               {item.value == 'rating_customer' ? (
                                 <div className="tracking-value">
                                   {value}/5{' '}
@@ -179,8 +187,10 @@ function Tracking(props) {
                       {orderInfo.items.map((item) => {
                         let value = order[item.value];
                         return (
-                          <div className="tracking-item">
-                            <div className="tracking-label">{item.label}</div>
+                          <div className="tracking-item" key={item.value}>
+                            <div className="tracking-label">
+                              {i18n.t(item.label)}
+                            </div>
                             {item.value == 'extend_code' ? (
                               <Copy copyText={value}>
                                 <CopyOutlined />
@@ -207,13 +217,15 @@ function Tracking(props) {
               </div>
               <div className="tracking-card">
                 <div className="tracking-box">
-                  <div className="tracking-header">{customerInfo.title}</div>
+                  <div className="tracking-header">
+                    {i18n.t(customerInfo.title)}
+                  </div>
                   <div className="tracking-body">
                     <div className="tracking-list">
                       {customerInfo.items.map((item) => {
                         let value = order[item.value];
                         return (
-                          <div className="tracking-item">
+                          <div className="tracking-item" key={item.value}>
                             <div
                               className="tracking-label"
                               style={{
@@ -222,7 +234,7 @@ function Tracking(props) {
                                   : 'unset'
                               }}
                             >
-                              {item.label}
+                              {i18n.t(item.label)}
                             </div>
                             {item.value == 'rating_customer' ? (
                               <div className="tracking-value">
@@ -243,13 +255,16 @@ function Tracking(props) {
             <div className="tracking-col">
               <div className="tracking-card">
                 <div className="tracking-box">
-                  <div className="tracking-header">Trạng thái đơn hàng</div>
+                  <div className="tracking-header">
+                    {i18n.t('Trạng thái đơn hàng')}
+                  </div>
                   <div
                     className="tracking-body"
                     style={{ padding: '16px 24px', flex: 1, height: '100%' }}
                   >
                     <Timeline className="tracking-timeline" mode="left">
                       {order.extend_update.map((item, index) => {
+                        console.log(item.updated_at);
                         const active = index == 0;
                         return (
                           <TimelineItem
@@ -320,7 +335,7 @@ function Tracking(props) {
             closable={false}
             footer={
               <Button size="large" block onClick={onConfirm} loading={loading}>
-                Tra cứu
+                {i18n.t('Tra cứu')}
               </Button>
             }
           >
@@ -339,7 +354,7 @@ function Tracking(props) {
                       color: 'rgba(0, 0, 0, 0.65)'
                     }}
                   >
-                    Xác nhận quyền truy cập đơn hàng
+                    {i18n.t('Xác nhận quyền truy cập đơn hàng')}
                   </div>
                   <div
                     style={{
@@ -348,7 +363,7 @@ function Tracking(props) {
                       color: 'rgba(0, 0, 0, 0.45)'
                     }}
                   >
-                    * Nhập 4 số cuối số điện thoại đặt hàng
+                    * {i18n.t('Nhập 4 số cuối số điện thoại đặt hàng')}
                   </div>
                 </div>
                 <OtpInput
@@ -370,7 +385,7 @@ function Tracking(props) {
                     marginBottom: 12
                   }}
                 >
-                  * Nhập 4 số cuối số điện thoại đặt hàng
+                  * {i18n.t('Nhập 4 số cuối số điện thoại đặt hàng')}
                 </div>
                 <OtpInput
                   shouldAutoFocus={true}
@@ -381,7 +396,7 @@ function Tracking(props) {
                 />
                 {!order.success && (
                   <div className="error-text" style={{ marginTop: 12 }}>
-                    Số điện thoại không chính xác
+                    {i18n.t('Số điện thoại không chính xác')}
                   </div>
                 )}
               </div>
@@ -399,8 +414,14 @@ export async function getServerSideProps(context) {
   const id = context.query.id || null;
   let res = { require_phone_number: true };
   if (id) res = await getData(id);
-
+  let trans = null;
+  let locale = 'en';
+  const isServer = typeof window === 'undefined'
+  if (isServer) {
+    trans = await getTranslation(getLangFromCountryCode(res?.country_code));
+    locale = getLangFromCountryCode(res?.country_code);
+  }
   return {
-    props: { id, data: res }
+    props: { id, data: res, trans, locale, isServer }
   };
 }
