@@ -417,7 +417,7 @@ export async function getServerSideProps(context) {
   let trans = null;
   let locale = 'en';
   const isServer = typeof window === 'undefined'
-  if (isServer && res?.country_code) {
+  if (isServer) {
     trans = await getTranslation(getLangFromCountryCode(res?.country_code));
     locale = getLangFromCountryCode(res?.country_code);
   }
