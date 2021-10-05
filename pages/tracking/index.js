@@ -181,7 +181,7 @@ function Tracking(props) {
               </div>
               <div className="tracking-card">
                 <div className="tracking-box">
-                  <div className="tracking-header">{orderInfo.title}</div>
+                  <div className="tracking-header">{i18n.t(orderInfo.title)}</div>
                   <div className="tracking-body">
                     <div className="tracking-list">
                       {orderInfo.items.map((item) => {
@@ -264,7 +264,6 @@ function Tracking(props) {
                   >
                     <Timeline className="tracking-timeline" mode="left">
                       {order.extend_update.map((item, index) => {
-                        console.log(item.updated_at);
                         const active = index == 0;
                         return (
                           <TimelineItem
