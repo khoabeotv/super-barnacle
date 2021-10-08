@@ -7,7 +7,7 @@
     "build": "next build",
     "setup": "pm2 deploy ecosystem.config.js production setup",
     "deploy-build": "pm2 deploy ecosystem.config.js production --force",
-    "deploy-start": "pm2 deploy ecosystem.config.js production run \"cd frontend && pm2 startOrRestart ecosystem.config.js --env production\"",
+    "deploy-start": "pm2 deploy ecosystem.config.js production run \"pm2 startOrRestart ecosystem.config.js --env production\"",
     "deploy": "npm run deploy-build && npm run deploy-start",
     "start": "NODE_ENV=production node server.js"
   },
