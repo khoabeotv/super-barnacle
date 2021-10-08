@@ -28,7 +28,7 @@ module.exports = {
       ref: "origin/master",
       repo: "git@github.com:khoabeotv/super-barnacle.git",
       path: "/home/cc/super-barnacle",
-      "post-deploy": "cd frontend && yarn; yarn build",
+      "post-deploy": "yarn; yarn build",
     },
   },
 };
