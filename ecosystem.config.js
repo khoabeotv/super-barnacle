@@ -24,7 +24,7 @@ module.exports = {
   deploy: {
     production: {
       user: "cc",
-      host: ["10.1.12.120"],
+      host: ["10.1.12.120", "10.1.12.24"],
       ref: "origin/master",
       repo: "git@github.com:khoabeotv/super-barnacle.git",
       path: "/home/cc/super-barnacle",
