@@ -1,9 +1,9 @@
-import { CopyOutlined, StarFilled } from '@ant-design/icons';
-import { Button, Input, Modal, Timeline } from 'antd';
+import { CopyOutlined, StarFilled, LoadingOutlined } from '@ant-design/icons';
+import { Button, Input, Modal, Timeline, Spin } from 'antd';
 import TimelineItem from 'antd/lib/timeline/TimelineItem';
 import axios from 'axios';
 import Head from 'next/head';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OtpInput from 'react-otp-input';
 import { formatDateTime } from 'utils';
 import Copy from '../../components/Copy';
@@ -14,7 +14,7 @@ import { getLangFromCountryCode } from '../../utils';
 const getData = (id, phone_number) => {
   return axios
     .get(`${API_BASE}/tracking`, {
-      params: { id, phone_number }
+      params: { id, phone_number },
     })
     .then((res) => res.data)
     .catch(() => ({ success: false, require_phone_number: true }));
@@ -23,7 +23,7 @@ const getData = (id, phone_number) => {
 const shopInfo = {
   title: 'Thông tin shop',
   value: 'shop_info',
-  items: [{ label: 'Tên shop', value: 'shop_name' }]
+  items: [{ label: 'Tên shop', value: 'shop_name' }],
 };
 
 const orderInfo = {
@@ -34,13 +34,13 @@ const orderInfo = {
     { label: 'Ngày đặt hàng', value: 'inserted_at' },
     {
       label: 'Trạng thái đơn hàng',
-      value: 'status'
+      value: 'status',
     },
     {
       label: 'Đơn vị vận chuyển',
-      value: 'partner_name'
-    }
-  ]
+      value: 'partner_name',
+    },
+  ],
 };
 
 const customerInfo = {
@@ -49,22 +49,22 @@ const customerInfo = {
   items: [
     {
       label: 'Họ và tên',
-      value: 'bill_full_name'
+      value: 'bill_full_name',
     },
     {
       label: 'Số điện thoại',
-      value: 'bill_phone_number'
+      value: 'bill_phone_number',
     },
     {
       label: 'Địa chỉ',
       value: 'address',
       styles: {
         label: {
-          mobile: { whiteSpace: 'nowrap' }
-        }
-      }
-    }
-  ]
+          mobile: { whiteSpace: 'nowrap' },
+        },
+      },
+    },
+  ],
 };
 
 function Tracking(props) {
@@ -72,11 +72,22 @@ function Tracking(props) {
   const [fourDigitsPhone, setFourDigitsPhone] = useState('');
   const [verifyOTP] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [order, setOrder] = useState(props.data);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [order, setOrder] = useState();
+
+  useEffect(async () => {
+    const data = await getData(props.id);
+    setOrder(data);
+    setDataLoading(false);
+  }, []);
 
   const renderTitle = () => {
     if (verifyOTP) {
-      return <div style={{ textAlign: 'center' }}>{i18n.t("Xác thực quyền truy cập")}</div>;
+      return (
+        <div style={{ textAlign: 'center' }}>
+          {i18n.t('Xác thực quyền truy cập')}
+        </div>
+      );
     }
     return <div>{i18n.t('Tìm kiếm đơn hàng')}</div>;
   };
@@ -91,6 +102,11 @@ function Tracking(props) {
     setOrder(res);
     setLoading(false);
   };
+
+  if (dataLoading)
+    return (
+      <Spin indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
+    );
 
   return (
     <>
@@ -112,7 +128,7 @@ function Tracking(props) {
                 function gtag(){dataLayer.push(arguments);}
                 gtag("js", new Date());
 
-                gtag("config", "G-4D7G1SVR9H");`
+                gtag("config", "G-4D7G1SVR9H");`,
             }}
           />
         </Head>
@@ -181,7 +197,9 @@ function Tracking(props) {
               </div>
               <div className="tracking-card">
                 <div className="tracking-box">
-                  <div className="tracking-header">{i18n.t(orderInfo.title)}</div>
+                  <div className="tracking-header">
+                    {i18n.t(orderInfo.title)}
+                  </div>
                   <div className="tracking-body">
                     <div className="tracking-list">
                       {orderInfo.items.map((item) => {
@@ -231,7 +249,7 @@ function Tracking(props) {
                               style={{
                                 whiteSpace: item?.styles
                                   ? item?.styles?.label?.mobile?.whiteSpace
-                                  : 'unset'
+                                  : 'unset',
                               }}
                             >
                               {i18n.t(item.label)}
@@ -276,7 +294,7 @@ function Tracking(props) {
                                 style={{
                                   color: active
                                     ? 'rgba(0, 0, 0, 0.65)'
-                                    : 'rgba(0, 0, 0, 0.45)'
+                                    : 'rgba(0, 0, 0, 0.45)',
                                 }}
                               >
                                 {item.status}
@@ -287,7 +305,7 @@ function Tracking(props) {
                                   style={{
                                     color: active
                                       ? 'rgba(0, 0, 0, 0.65)'
-                                      : 'rgba(0, 0, 0, 0.45)'
+                                      : 'rgba(0, 0, 0, 0.45)',
                                   }}
                                 >
                                   {item.note}
@@ -299,7 +317,7 @@ function Tracking(props) {
                                   style={{
                                     color: active
                                       ? 'rgba(0, 0, 0, 0.65)'
-                                      : 'rgba(0, 0, 0, 0.45)'
+                                      : 'rgba(0, 0, 0, 0.45)',
                                   }}
                                 >
                                   {item.location}
@@ -311,7 +329,7 @@ function Tracking(props) {
                                   lineHeight: '1.5',
                                   color: active
                                     ? 'rgba(0, 0, 0, 0.65)'
-                                    : 'rgba(0, 0, 0, 0.45)'
+                                    : 'rgba(0, 0, 0, 0.45)',
                                 }}
                               >
                                 {formatDateTime(item.updated_at, true)}
@@ -350,7 +368,7 @@ function Tracking(props) {
                     style={{
                       fontSize: '14px',
                       lineHeight: '22px',
-                      color: 'rgba(0, 0, 0, 0.65)'
+                      color: 'rgba(0, 0, 0, 0.65)',
                     }}
                   >
                     {i18n.t('Xác nhận quyền truy cập đơn hàng')}
@@ -359,7 +377,7 @@ function Tracking(props) {
                     style={{
                       fontSize: '14px',
                       lineHeight: '20px',
-                      color: 'rgba(0, 0, 0, 0.45)'
+                      color: 'rgba(0, 0, 0, 0.45)',
                     }}
                   >
                     * {i18n.t('Nhập 4 số cuối số điện thoại đặt hàng')}
@@ -381,7 +399,7 @@ function Tracking(props) {
                     fontSize: '14px',
                     lineHeight: '20px',
                     color: 'rgba(0, 0, 0, 0.45)',
-                    marginBottom: 12
+                    marginBottom: 12,
                   }}
                 >
                   * {i18n.t('Nhập 4 số cuối số điện thoại đặt hàng')}
@@ -412,15 +430,14 @@ export default Tracking;
 export async function getServerSideProps(context) {
   const id = context.query.id || null;
   let res = { require_phone_number: true };
-  if (id) res = await getData(id);
   let trans = null;
   let locale = 'en';
-  const isServer = typeof window === 'undefined'
+  const isServer = typeof window === 'undefined';
   if (isServer) {
     trans = await getTranslation(getLangFromCountryCode(res?.country_code));
     locale = getLangFromCountryCode(res?.country_code);
   }
   return {
-    props: { id, data: res, trans, locale, isServer }
+    props: { id, trans, locale, isServer },
   };
 }
