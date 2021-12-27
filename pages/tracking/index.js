@@ -2,6 +2,7 @@ import { CopyOutlined, StarFilled, LoadingOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Timeline, Spin } from 'antd';
 import TimelineItem from 'antd/lib/timeline/TimelineItem';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
 import OtpInput from 'react-otp-input';
@@ -68,6 +69,7 @@ const customerInfo = {
 };
 
 function Tracking(props) {
+  const router = useRouter();
   const [width] = useDeviceSize();
   const [fourDigitsPhone, setFourDigitsPhone] = useState('');
   const [verifyOTP] = useState(true);
@@ -76,14 +78,16 @@ function Tracking(props) {
   const [order, setOrder] = useState();
 
   useEffect(async () => {
-    const data = await getData(props.id);
-    const locale = getLangFromCountryCode(data?.country_code);
-    const trans = await getTranslation(locale);
+    if (router.query.id) {
+      const data = await getData(router.query.id);
+      const locale = getLangFromCountryCode(data?.country_code);
+      const trans = await getTranslation(locale);
 
-    startI18n(trans, locale);
-    setOrder(data);
-    setDataLoading(false);
-  }, []);
+      startI18n(trans, locale);
+      setOrder(data);
+      setDataLoading(false);
+    }
+  }, [router.query]);
 
   const renderTitle = () => {
     if (verifyOTP) {
