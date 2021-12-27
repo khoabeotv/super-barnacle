@@ -8,7 +8,7 @@ import OtpInput from 'react-otp-input';
 import { formatDateTime } from 'utils';
 import Copy from '../../components/Copy';
 import { useDeviceSize } from '../../hooks/useDeviceSize';
-import i18n, { getTranslation } from '../../i18n';
+import i18n, { getTranslation, startI18n } from '../../i18n';
 import { getLangFromCountryCode } from '../../utils';
 
 const getData = (id, phone_number) => {
@@ -77,6 +77,10 @@ function Tracking(props) {
 
   useEffect(async () => {
     const data = await getData(props.id);
+    const locale = getLangFromCountryCode(data?.country_code);
+    const trans = await getTranslation(locale);
+
+    startI18n(trans, locale);
     setOrder(data);
     setDataLoading(false);
   }, []);
@@ -426,18 +430,3 @@ function Tracking(props) {
 }
 
 export default Tracking;
-
-export async function getServerSideProps(context) {
-  const id = context.query.id || null;
-  let res = { require_phone_number: true };
-  let trans = null;
-  let locale = 'en';
-  const isServer = typeof window === 'undefined';
-  if (isServer) {
-    trans = await getTranslation(getLangFromCountryCode(res?.country_code));
-    locale = getLangFromCountryCode(res?.country_code);
-  }
-  return {
-    props: { id, trans, locale, isServer },
-  };
-}
