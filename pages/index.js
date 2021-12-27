@@ -92,7 +92,7 @@ export default function Home() {
 
   const form = [
     [
-      'FB Name',
+      'Facebook Nama',
       <>
         <Input
           onBlur={checkFBName}
@@ -102,20 +102,20 @@ export default function Home() {
         />
         {isValid === false && (
           <div style={{ color: '#f5222d' }}>
-            FB account has not interacted with {title}'s Facebook Page
+            Akun FB belum berinteraksi dengan {title}'s Facebook Halaman
           </div>
         )}
       </>
     ],
     [
-      'Phone number',
+      'Nomor telepon',
       <Input
         value={info.phone_number}
         onChange={(e) => onChange('phone_number', e.target.value)}
       />
     ],
     [
-      'Address',
+      'Alamat',
       <Address
         address={info.address}
         province_id={info.province_id}
@@ -124,13 +124,13 @@ export default function Home() {
         onChange={onChange}
       />
     ],
-    [
-      'Product information',
-      <Input.TextArea
-        value={info.note}
-        onChange={(e) => onChange('note', e.target.value)}
-      />
-    ],
+    // [
+    //   'Product information',
+    //   <Input.TextArea
+    //     value={info.note}
+    //     onChange={(e) => onChange('note', e.target.value)}
+    //   />
+    // ],
     [
       null,
       <Button
@@ -140,7 +140,7 @@ export default function Home() {
         type="primary mgt-16"
         style={{ width: '100%' }}
       >
-        Submit
+        Kirim
       </Button>
     ]
   ];

@@ -83,7 +83,7 @@ const Address = ({
       <Input
         value={address}
         onChange={(e) => onChange('address', e.target.value)}
-        placeholder="Street"
+        placeholder="Jalan"
         className="mgb-5"
       />
       <div className="flex">
@@ -97,7 +97,7 @@ const Address = ({
           value={province_id}
           onChange={(value) => onChange('province_id', value)}
           style={{ width: '100%', marginRight: 5 }}
-          placeholder="Province"
+          placeholder="Propinsi"
         />
         <Select
           options={districts.map((item) => ({
@@ -107,7 +107,7 @@ const Address = ({
           value={district_id}
           onChange={(value) => onChange('district_id', value)}
           style={{ width: '100%', marginRight: 5 }}
-          placeholder="District"
+          placeholder="Daerah"
         />
         <Select
           options={communes.map((item) => ({
@@ -117,7 +117,7 @@ const Address = ({
           value={commune_id}
           onChange={(value) => onChange('commune_id', value)}
           style={{ width: '100%' }}
-          placeholder="Commune"
+          placeholder="Komune"
         />
       </div>
     </>
