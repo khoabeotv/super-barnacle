@@ -12,10 +12,14 @@ export default {
   'Số điện thoại': 'Số điện thoại',
   'Địa chỉ': 'Địa chỉ',
   'Trạng thái đơn hàng': 'Trạng thái đơn hàng',
-  'Nhập 4 số cuối số điện thoại đặt hàng': 'Nhập 4 số cuối số điện thoại đặt hàng',
+  'Nhập 4 số cuối số điện thoại đặt hàng':
+    'Nhập 4 số cuối số điện thoại đặt hàng',
   'Số điện thoại không chính xác': 'Số điện thoại không chính xác',
   'Xác nhận quyền truy cập đơn hàng': 'Xác nhận quyền truy cập đơn hàng',
   'Tra cứu': 'Tra cứu',
   'Xác thực quyền truy cập': 'Xác thực quyền truy cập',
-  'Tìm kiếm đơn hàng': 'Tìm kiếm đơn hàng'
+  'Tìm kiếm đơn hàng': 'Tìm kiếm đơn hàng',
+  'Tải ngay Levera để theo dõi toàn bộ đơn hàng':
+    'Tải ngay Levera để theo dõi toàn bộ đơn hàng',
+  'Tìm hiểu thêm về Levera': 'Tìm hiểu thêm về Levera'
 };

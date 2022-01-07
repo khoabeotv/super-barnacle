@@ -12,10 +12,14 @@ export default {
   'Số điện thoại': 'Nomor telepon',
   'Địa chỉ': 'Alamat',
   'Trạng thái đơn hàng': 'Status Pesanan',
-  'Nhập 4 số cuối số điện thoại đặt hàng': 'Masukkan 4 digit terakhir nomor telepon pesanan Anda',
+  'Nhập 4 số cuối số điện thoại đặt hàng':
+    'Masukkan 4 digit terakhir nomor telepon pesanan Anda',
   'Số điện thoại không chính xác': 'Nomor telepon salah',
   'Xác nhận quyền truy cập đơn hàng': 'Konfirmasi akses pesanan',
   'Tra cứu': 'Mencari',
   'Xác thực quyền truy cập': 'Verifikasi akses',
-  'Tìm kiếm đơn hàng': 'Pencarian pesanan'
+  'Tìm kiếm đơn hàng': 'Pencarian pesanan',
+  'Tải ngay Levera để theo dõi toàn bộ đơn hàng':
+    'Unduh Levera sekarang untuk melacak semua pesanan',
+  'Tìm hiểu thêm về Levera': 'Pelajari selengkapnya tentang Levera'
 };
