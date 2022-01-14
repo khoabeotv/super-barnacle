@@ -435,7 +435,7 @@ function Tracking(props) {
           </Modal>
         )}
 
-        {locale == 'vi' && Math.floor(Math.random() * 100) == 1 && (
+        {locale == 'vi' && Math.floor(Math.random() * 100) <= 5 && (
           <div className="footer-tracking">
             <div className="footer-left">
               <div>
