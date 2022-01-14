@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: row;
   height: 100%;
-  padding: 104px 162px;
+  padding: 56px 162px;
   overflow: auto;
 
   .tracking-col {
@@ -51,7 +51,7 @@
   }
 
   @media screen and (max-width: $fullhd) {
-    padding: 104px 91px;
+    padding: 56px 91px;
   }
 
   @media screen and (max-width: $tablet) {
