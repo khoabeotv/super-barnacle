@@ -118,7 +118,7 @@ function Tracking(props) {
     return (
       <Spin indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
     );
-  console.log(locale);
+
   return (
     <>
       <Head>
@@ -435,7 +435,7 @@ function Tracking(props) {
           </Modal>
         )}
 
-        {locale == 'vi' && (
+        {locale == 'vi' && Math.floor(Math.random() * 100) == 1 && (
           <div className="footer-tracking">
             <div className="footer-left">
               <div>
