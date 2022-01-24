@@ -10,12 +10,14 @@ const Address = ({
   address,
   province_id,
   district_id,
-  commune_id
+  commune_id,
 }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [communes, setCommunes] = useState([]);
   const didMountRef = useRef(false);
+  const communeRef = useRef();
+  const districtRef = useRef();
 
   useEffect(() => {
     setDistricts([]);
@@ -38,10 +40,12 @@ const Address = ({
     const provinces = JSON.parse(localStorage.getItem('provinces_62'));
     if (provinces) setProvinces(provinces);
     else
-      axios.get(`https://pos.pages.fm/api/v1/geo/provinces?country_code=62`).then((res) => {
-        localStorage.setItem('provinces_62', JSON.stringify(res.data.data));
-        setProvinces(res.data.data);
-      });
+      axios
+        .get(`https://pos.pages.fm/api/v1/geo/provinces?country_code=62`)
+        .then((res) => {
+          localStorage.setItem('provinces_62', JSON.stringify(res.data.data));
+          setProvinces(res.data.data);
+        });
   };
   const getDistricts = () => {
     if (!province_id) return;
@@ -51,7 +55,9 @@ const Address = ({
     if (districts) setDistricts(districts);
     else
       axios
-        .get(`https://pos.pages.fm/api/v1/geo/districts?province_id=${province_id}`)
+        .get(
+          `https://pos.pages.fm/api/v1/geo/districts?province_id=${province_id}`
+        )
         .then((res) => {
           localStorage.setItem(
             'districts_' + province_id,
@@ -68,7 +74,9 @@ const Address = ({
     if (communes) setCommunes(communes);
     else
       axios
-        .get(`https://pos.pages.fm/api/v1/geo/communes?district_id=${district_id}`)
+        .get(
+          `https://pos.pages.fm/api/v1/geo/communes?district_id=${district_id}`
+        )
         .then((res) => {
           localStorage.setItem(
             'communes_' + district_id,
@@ -90,30 +98,41 @@ const Address = ({
         <Select
           options={provinces.map((item) => ({
             label: item.name,
-            value: item.id
+            value: item.id,
           }))}
           showSearch
           filterOption={(input, option) => fuzzySearch(input, option.label)}
           value={province_id}
-          onChange={(value) => onChange('province_id', value)}
+          onChange={(value) => {
+            onChange('province_id', value);
+            districtRef.current.focus();
+          }}
+          showAction={['focus', 'click']}
           style={{ width: '100%', marginRight: 5 }}
           placeholder="Propinsi"
         />
         <Select
           options={districts.map((item) => ({
             label: item.name,
-            value: item.id
+            value: item.id,
           }))}
+          ref={districtRef}
           value={district_id}
-          onChange={(value) => onChange('district_id', value)}
+          onChange={(value) => {
+            onChange('district_id', value);
+            communeRef.current.focus();
+          }}
+          showAction={['focus', 'click']}
           style={{ width: '100%', marginRight: 5 }}
           placeholder="Daerah"
         />
         <Select
           options={communes.map((item) => ({
             label: item.name,
-            value: item.id
+            value: item.id,
           }))}
+          showAction={['focus', 'click']}
+          ref={communeRef}
           value={commune_id}
           onChange={(value) => onChange('commune_id', value)}
           style={{ width: '100%' }}

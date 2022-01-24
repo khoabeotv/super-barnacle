@@ -156,7 +156,7 @@ export default function Home() {
       {loading ? (
         <Spin indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
       ) : success ? (
-        <Result status="success" title="Successfully Ordered" />
+        <Result status="success" title="Mendaftar kesuksesan" />
       ) : (
         <div className="flex-center">
           <div className="form-wrapper flex-center flex-column">
