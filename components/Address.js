@@ -94,7 +94,7 @@ const Address = ({
         placeholder="Jalan"
         className="mgb-5"
       />
-      <div className="flex">
+      <div className="flex" style={{ flexWrap: 'wrap' }}>
         <Select
           options={provinces.map((item) => ({
             label: item.name,
@@ -108,7 +108,7 @@ const Address = ({
             districtRef.current.focus();
           }}
           showAction={['focus', 'click']}
-          style={{ width: '100%', marginRight: 5 }}
+          style={{ flex: 1 }}
           placeholder="Propinsi"
         />
         <Select
@@ -123,7 +123,7 @@ const Address = ({
             communeRef.current.focus();
           }}
           showAction={['focus', 'click']}
-          style={{ width: '100%', marginRight: 5 }}
+          style={{ flex: 1 }}
           placeholder="Daerah"
         />
         <Select
@@ -135,7 +135,7 @@ const Address = ({
           ref={communeRef}
           value={commune_id}
           onChange={(value) => onChange('commune_id', value)}
-          style={{ width: '100%' }}
+          style={{ flex: 1 }}
           placeholder="Komune"
         />
       </div>
