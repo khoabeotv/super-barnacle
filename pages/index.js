@@ -139,7 +139,7 @@ export default function Home() {
                 return (
                   <Select.Option key={JSON.stringify(pageCustomer)} >
                     <div style={{ display: 'flex', justifyItems: "center", height: '100%' }}>
-                      <Avatar size={22} url={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
+                      <Avatar size={22} src={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
                       />
                       <span style={{ marginLeft: '10px' }}>{pageCustomer.name}</span>
                     </div>
