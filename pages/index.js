@@ -2,7 +2,7 @@ import Head from 'next/head';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState, useRef } from 'react';
-import { Spin, Input, Avatar, Button, message, Result } from 'antd';
+import { Spin, Input, Avatar, Button, message, Result, Select } from 'antd';
 import {
   LoadingOutlined,
   WhatsAppOutlined,
@@ -20,6 +20,8 @@ export default function Home() {
   const [info, setInfo] = useState({});
   const [isValid, setValid] = useState();
   const [success, setSuccess] = useState();
+  const [pageCustomers, setPageCustomer] = useState([]);
+  const [pageCustomersSelected, setPageCustomerSelected] = useState([]);
   const query = useRef({});
 
   useEffect(() => {
@@ -50,7 +52,10 @@ export default function Home() {
         params: { name: info.full_name, pid: query.current.pid }
       })
       .then((res) => {
-        setValid(res.data.is_valid);
+        setValid(res.data.page_customers.length > 0);
+        setPageCustomer(res.data.page_customers);
+        if (res.data.page_customers.length > 0) setPageCustomerSelected([JSON.stringify(res.data.page_customers[0])])
+
       });
   };
 
@@ -61,7 +66,8 @@ export default function Home() {
       .post(`${API_BASE}/create`, {
         cid: query.current.cid,
         pid: query.current.pid,
-        info
+        info,
+        pages_customers: JSON.stringify(pageCustomersSelected.map(p => JSON.parse(p)))
       })
       .then(() => {
         setSuccess(true);
@@ -73,6 +79,10 @@ export default function Home() {
         message.error('Oops. Something went wrong. Please try again later.');
       });
   };
+
+  const handleChangePageCustomer = (values) => {
+    console.log(values, 'ádasdas')
+  }
 
   const getFBNameSuffix = () => {
     switch (isValid) {
@@ -90,7 +100,7 @@ export default function Home() {
     }
   };
 
-  const form = [
+  let form = [
     [
       'Facebook Nama',
       <>
@@ -107,43 +117,81 @@ export default function Home() {
         )}
       </>
     ],
-    [
-      'Nomor telepon',
-      <Input
-        value={info.phone_number}
-        onChange={(e) => onChange('phone_number', e.target.value)}
-      />
-    ],
-    [
-      'Alamat',
-      <Address
-        address={info.address}
-        province_id={info.province_id}
-        district_id={info.district_id}
-        commune_id={info.commune_id}
-        onChange={onChange}
-      />
-    ],
-    // [
-    //   'Product information',
-    //   <Input.TextArea
-    //     value={info.note}
-    //     onChange={(e) => onChange('note', e.target.value)}
-    //   />
-    // ],
-    [
-      null,
-      <Button
-        loading={submitLoading}
-        onClick={onSubmit}
-        disabled={!isValid}
-        type="primary mgt-16"
-        style={{ width: '100%' }}
-      >
-        Kirim
-      </Button>
-    ]
   ];
+
+  if (pageCustomers.length > 0) {
+    form.push(
+      [
+        'Akun facebook',
+        <>
+          <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Silahkan pilih"
+            onChange={(values) => {
+              setPageCustomerSelected(values)
+            }}
+            value={pageCustomersSelected}
+
+          >
+            {
+              pageCustomers.map(pageCustomer => {
+                return (
+                  <Select.Option key={JSON.stringify(pageCustomer)} >
+                    <div style={{ display: 'flex', justifyItems: "center", height: '100%' }}>
+                      <Avatar size={22} url={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
+                      />
+                      <span style={{ marginLeft: '10px' }}>{pageCustomer.name}</span>
+                    </div>
+                  </Select.Option>
+                )
+              })
+            }
+          </Select>
+        </>
+
+      ]
+    )
+  }
+
+  form = [...form,
+  [
+    'Nomor telepon',
+    <Input
+      value={info.phone_number}
+      onChange={(e) => onChange('phone_number', e.target.value)}
+    />
+  ],
+  [
+    'Alamat',
+    <Address
+      address={info.address}
+      province_id={info.province_id}
+      district_id={info.district_id}
+      commune_id={info.commune_id}
+      onChange={onChange}
+    />
+  ],
+  // [
+  //   'Product information',
+  //   <Input.TextArea
+  //     value={info.note}
+  //     onChange={(e) => onChange('note', e.target.value)}
+  //   />
+  // ],
+  [
+    null,
+    <Button
+      loading={submitLoading}
+      onClick={onSubmit}
+      disabled={!isValid}
+      type="primary mgt-16"
+      style={{ width: '100%' }}
+    >
+      Kirim
+    </Button>
+  ]
+  ]
 
   return (
     <>
