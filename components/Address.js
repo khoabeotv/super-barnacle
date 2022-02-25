@@ -109,7 +109,7 @@ const Address = ({
           }}
           showAction={['focus', 'click']}
           style={{ flex: 1 }}
-          placeholder="Propinsi"
+          placeholder="Provinsi"
         />
         <Select
           options={districts.map((item) => ({
@@ -124,7 +124,7 @@ const Address = ({
           }}
           showAction={['focus', 'click']}
           style={{ flex: 1 }}
-          placeholder="Daerah"
+          placeholder="Kabupaten"
         />
         <Select
           options={communes.map((item) => ({
@@ -136,7 +136,7 @@ const Address = ({
           value={commune_id}
           onChange={(value) => onChange('commune_id', value)}
           style={{ flex: 1 }}
-          placeholder="Komune"
+          placeholder="Kecamatan"
         />
       </div>
     </>

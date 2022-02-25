@@ -36,7 +36,13 @@ export default function Home() {
           params: { cid: query.current.cid, pid: query.current.pid }
         })
         .then((res) => {
-          if (res.data.info) setInfo(res.data.info);
+          if (res.data.info) setInfo({
+            ...res.data.info,
+            address: "",
+            commune_id: null,
+            district_id: null,
+            province_id: null
+          });
           setTitle(res.data.page_name);
           setLoading(false);
         });
@@ -52,10 +58,10 @@ export default function Home() {
         params: { name: info.full_name, pid: query.current.pid }
       })
       .then((res) => {
-        setValid(res.data.page_customers.length > 0);
-        setPageCustomer(res.data.page_customers);
-        if (res.data.page_customers.length > 0) setPageCustomerSelected([JSON.stringify(res.data.page_customers[0])])
-
+        const pagesCustomers = res.data.page_customers.length.filter(p => p.name === info.full_name)
+        setValid(pagesCustomers.length > 0);
+        setPageCustomer(pagesCustomers);
+        if (pagesCustomers.length > 0) setPageCustomerSelected([JSON.stringify(pagesCustomers[0])])
       });
   };
 
@@ -79,10 +85,6 @@ export default function Home() {
         message.error('Oops. Something went wrong. Please try again later.');
       });
   };
-
-  const handleChangePageCustomer = (values) => {
-    console.log(values, 'ádasdas')
-  }
 
   const getFBNameSuffix = () => {
     switch (isValid) {
