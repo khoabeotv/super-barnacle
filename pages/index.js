@@ -58,7 +58,7 @@ export default function Home() {
         params: { name: info.full_name, pid: query.current.pid }
       })
       .then((res) => {
-        const pagesCustomers = res.data.page_customers.length.filter(p => p.name === info.full_name)
+        const pagesCustomers = res.data.page_customers.filter(p => p.name === info.full_name)
         setValid(pagesCustomers.length > 0);
         setPageCustomer(pagesCustomers);
         if (pagesCustomers.length > 0) setPageCustomerSelected([JSON.stringify(pagesCustomers[0])])
