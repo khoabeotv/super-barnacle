@@ -58,9 +58,8 @@ export default function Home() {
         params: { name: info.full_name, pid: query.current.pid }
       })
       .then((res) => {
-        const pagesCustomers = res.data.page_customers.filter(p => p.name === info.full_name)
-        setValid(pagesCustomers.length > 0);
-        setPageCustomer(pagesCustomers);
+        setValid(res.data.page_customers.length > 0);
+        setPageCustomer(res.data.page_customers);
       });
   };
 
