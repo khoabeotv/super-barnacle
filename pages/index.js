@@ -61,7 +61,6 @@ export default function Home() {
         const pagesCustomers = res.data.page_customers.filter(p => p.name === info.full_name)
         setValid(pagesCustomers.length > 0);
         setPageCustomer(pagesCustomers);
-        if (pagesCustomers.length > 0) setPageCustomerSelected([JSON.stringify(pagesCustomers[0])])
       });
   };
 
@@ -150,6 +149,12 @@ export default function Home() {
               })
             }
           </Select>
+
+          {pageCustomersSelected.length === 0 && (
+            <div style={{ color: '#f5222d' }}>
+              Anda harus memilih akun facebook!
+            </div>
+          )}
         </>
 
       ]
@@ -186,7 +191,7 @@ export default function Home() {
     <Button
       loading={submitLoading}
       onClick={onSubmit}
-      disabled={!isValid}
+      disabled={!isValid || (pageCustomersSelected.length === 0)}
       type="primary mgt-16"
       style={{ width: '100%' }}
     >
