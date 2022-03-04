@@ -7,6 +7,7 @@ import { fuzzySearch } from 'utils';
 
 const Address = ({
   onChange,
+  onChanges,
   address,
   province_id,
   district_id,
@@ -94,7 +95,7 @@ const Address = ({
         placeholder="Jalan"
         className="mgb-5"
       />
-      <div className="flex" style={{ flexWrap: 'wrap' }}>
+      <div className="flex" style={{ flexWrap: 'wrap', flexDirection: 'column' }}>
         <Select
           options={provinces.map((item) => ({
             label: item.name,
@@ -104,7 +105,11 @@ const Address = ({
           filterOption={(input, option) => fuzzySearch(input, option.label)}
           value={province_id}
           onChange={(value) => {
-            onChange('province_id', value);
+            const province = provinces.find(d => d.id == value)
+            onChanges({
+              province_id: value,
+              province: province.name
+            })
             districtRef.current.focus();
           }}
           showAction={['focus', 'click']}
@@ -116,10 +121,16 @@ const Address = ({
             label: item.name,
             value: item.id,
           }))}
+          showSearch
+          filterOption={(input, option) => fuzzySearch(input, option.label)}
           ref={districtRef}
           value={district_id}
           onChange={(value) => {
-            onChange('district_id', value);
+            const district = districts.find(d => d.id == value)
+            onChanges({
+              district_id: value,
+              district: district.name
+            })
             communeRef.current.focus();
           }}
           showAction={['focus', 'click']}
@@ -131,10 +142,18 @@ const Address = ({
             label: item.name,
             value: item.id,
           }))}
+          showSearch
+          filterOption={(input, option) => fuzzySearch(input, option.label)}
           showAction={['focus', 'click']}
           ref={communeRef}
           value={commune_id}
-          onChange={(value) => onChange('commune_id', value)}
+          onChange={(value) => {
+            const commune = communes.find(d => d.id == value)
+            onChanges({
+              commune_id: value,
+              commune: commune.name
+            })
+          }}
           style={{ flex: 1 }}
           placeholder="Kecamatan"
         />

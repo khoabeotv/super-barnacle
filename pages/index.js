@@ -21,7 +21,7 @@ export default function Home() {
   const [isValid, setValid] = useState();
   const [success, setSuccess] = useState();
   const [pageCustomers, setPageCustomer] = useState([]);
-  const [pageCustomersSelected, setPageCustomerSelected] = useState([]);
+  const [pageCustomersSelected, setPageCustomerSelected] = useState(null);
   const query = useRef({});
 
   useEffect(() => {
@@ -41,7 +41,11 @@ export default function Home() {
             address: "",
             commune_id: null,
             district_id: null,
-            province_id: null
+            province_id: null,
+            commune: null,
+            district: null,
+            province: null,
+            recipient_name: ""
           });
           setTitle(res.data.page_name);
           setLoading(false);
@@ -49,7 +53,12 @@ export default function Home() {
     }
   }, [router.query]);
 
-  const onChange = (key, value) => setInfo({ ...info, [key]: value });
+  const onChange = (key, value) => {
+    setInfo({ ...info, [key]: value });
+  }
+  const onChanges = (obj) => {
+    setInfo({ ...info, ...obj});
+  }
 
   const checkFBName = () => {
     setValid('');
@@ -71,7 +80,7 @@ export default function Home() {
         cid: query.current.cid,
         pid: query.current.pid,
         info,
-        pages_customers: JSON.stringify(pageCustomersSelected.map(p => JSON.parse(p)))
+        pages_customers: pageCustomersSelected
       })
       .then(() => {
         setSuccess(true);
@@ -125,11 +134,10 @@ export default function Home() {
         'Akun facebook',
         <>
           <Select
-            mode="multiple"
             style={{ width: '100%' }}
             placeholder="Silahkan pilih"
-            onChange={(values) => {
-              setPageCustomerSelected(values)
+            onChange={(value) => {
+              setPageCustomerSelected(value)
             }}
             value={pageCustomersSelected}
 
@@ -138,8 +146,8 @@ export default function Home() {
               pageCustomers.map(pageCustomer => {
                 return (
                   <Select.Option key={JSON.stringify(pageCustomer)} >
-                    <div style={{ display: 'flex', justifyItems: "center", height: '100%' }}>
-                      <Avatar size={22} src={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
+                    <div style={{ display: 'flex', justifyItems: "center", height: '100%', lineHeight: '30px' }}>
+                      <Avatar size={30} src={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
                       />
                       <span style={{ marginLeft: '10px' }}>{pageCustomer.name}</span>
                     </div>
@@ -149,7 +157,7 @@ export default function Home() {
             }
           </Select>
 
-          {pageCustomersSelected.length === 0 && (
+          {!pageCustomersSelected && (
             <div style={{ color: '#f5222d' }}>
               Anda harus memilih akun facebook!
             </div>
@@ -161,6 +169,13 @@ export default function Home() {
   }
 
   form = [...form,
+  [
+    'Nama Penerima Paket',
+    <Input
+      value={info.recipient_name}
+      onChange={(e) => onChange('recipient_name', e.target.value)}
+    />
+  ],
   [
     'Nomor telepon',
     <Input
@@ -176,6 +191,7 @@ export default function Home() {
       district_id={info.district_id}
       commune_id={info.commune_id}
       onChange={onChange}
+      onChanges={onChanges}
     />
   ],
   // [
@@ -190,7 +206,7 @@ export default function Home() {
     <Button
       loading={submitLoading}
       onClick={onSubmit}
-      disabled={!isValid || (pageCustomersSelected.length === 0)}
+      disabled={!isValid || !pageCustomersSelected}
       type="primary mgt-16"
       style={{ width: '100%' }}
     >
