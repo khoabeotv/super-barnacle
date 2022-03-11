@@ -121,7 +121,7 @@ export default function Home() {
         />
         {isValid === false && (
           <div style={{ color: '#f5222d' }}>
-            Akun FB belum berinteraksi dengan {title}'s Facebook Halaman
+            Akun FB belum berinteraksi dengan {title}. Pastikan sudah mengisi sesuai dan pernah komentar minimal 1 kali di live.
           </div>
         )}
       </>
@@ -147,7 +147,7 @@ export default function Home() {
                 return (
                   <Select.Option key={JSON.stringify(pageCustomer)} >
                     <div style={{ display: 'flex', justifyItems: "center", height: '100%', lineHeight: '30px' }}>
-                      <Avatar size={30} src={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
+                      <Avatar  size={28} src={`https://pages.fm/api/v1/pages/${pageCustomer.page_id}/avatar/${pageCustomer.fb_id}`}
                       />
                       <span style={{ marginLeft: '10px' }}>{pageCustomer.name}</span>
                     </div>
@@ -179,6 +179,7 @@ export default function Home() {
   [
     'Nomor telepon',
     <Input
+      disabled={true}
       value={info.phone_number}
       onChange={(e) => onChange('phone_number', e.target.value)}
     />
@@ -206,7 +207,7 @@ export default function Home() {
     <Button
       loading={submitLoading}
       onClick={onSubmit}
-      disabled={!isValid || !pageCustomersSelected}
+      disabled={!isValid || !pageCustomersSelected || !(info.commune_id && info.district_id && info.address && info.province_id)}
       type="primary mgt-16"
       style={{ width: '100%' }}
     >

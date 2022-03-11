@@ -95,6 +95,11 @@ const Address = ({
         placeholder="Jalan"
         className="mgb-5"
       />
+      {!address && (
+        <div style={{ color: '#f5222d' }}>
+          Tidak boleh dibiarkan kosong!
+        </div>
+      )}
       <div className="flex" style={{ flexWrap: 'wrap', flexDirection: 'column' }}>
         <Select
           options={provinces.map((item) => ({
@@ -116,6 +121,11 @@ const Address = ({
           style={{ flex: 1 }}
           placeholder="Provinsi"
         />
+        {!province_id && (
+          <div style={{ color: '#f5222d' }}>
+            Tidak boleh dibiarkan kosong!
+          </div>
+        )}
         <Select
           options={districts.map((item) => ({
             label: item.name,
@@ -137,6 +147,11 @@ const Address = ({
           style={{ flex: 1 }}
           placeholder="Kabupaten"
         />
+        {!district_id && (
+          <div style={{ color: '#f5222d' }}>
+            Tidak boleh dibiarkan kosong!
+          </div>
+        )}
         <Select
           options={communes.map((item) => ({
             label: item.name,
@@ -157,6 +172,11 @@ const Address = ({
           style={{ flex: 1 }}
           placeholder="Kecamatan"
         />
+        {!commune_id && (
+          <div style={{ color: '#f5222d' }}>
+            Tidak boleh dibiarkan kosong!
+          </div>
+        )}
       </div>
     </>
   );
