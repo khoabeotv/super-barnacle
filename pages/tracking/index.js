@@ -311,7 +311,7 @@ function Tracking(props) {
                                 >
                                   {item.status}
                                 </div>
-                                {item.note && (
+                                {/* {item.note && (
                                   <div
                                     className="tracking-note"
                                     style={{
@@ -322,7 +322,7 @@ function Tracking(props) {
                                   >
                                     {item.note}
                                   </div>
-                                )}
+                                )} */}
                                 {item.location && (
                                   <div
                                     className="tracking-note"
@@ -344,7 +344,7 @@ function Tracking(props) {
                                       : 'rgba(0, 0, 0, 0.45)'
                                   }}
                                 >
-                                  {formatDateTime(item.updated_at, true)}
+                                  {formatDateTime(item.updated_at || item.update_at, true)}
                                 </div>
                               </div>
                             </TimelineItem>
