@@ -109,7 +109,7 @@ function Tracking(props) {
 
   const onConfirm = async () => {
     setLoading(true);
-    const res = await getData(props.id, fourDigitsPhone);
+    const res = await getData(router.query.id, fourDigitsPhone);
     setOrder(res);
     setLoading(false);
   };
