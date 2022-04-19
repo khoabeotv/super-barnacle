@@ -19,7 +19,12 @@ export default {
   'Tra cứu': 'Search',
   'Xác thực quyền truy cập': 'Verify access',
   'Tìm kiếm đơn hàng': 'Order search',
-  'Tải ngay Levera để theo dõi toàn bộ đơn hàng':
-    'Download Levera now to track all orders',
+  'Tải app Levera để theo dõi đơn hàng, tích điểm':
+    'Download the Levera app to track orders and earn points',
+  'Bạn đã có': 'You had',
+  'đơn hàng': 'order',
+  'đơn hàng > 2': 'orders',
+  'Tích luỹ': 'Accumulation',
+  '5% giá trị mỗi đơn hàng': '5% value per order',
   'Tìm hiểu thêm về Levera': 'Learn more about Levera'
 };

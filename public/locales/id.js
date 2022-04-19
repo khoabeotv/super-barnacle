@@ -19,7 +19,12 @@ export default {
   'Tra cứu': 'Mencari',
   'Xác thực quyền truy cập': 'Verifikasi akses',
   'Tìm kiếm đơn hàng': 'Pencarian pesanan',
-  'Tải ngay Levera để theo dõi toàn bộ đơn hàng':
-    'Unduh Levera sekarang untuk melacak semua pesanan',
-  'Tìm hiểu thêm về Levera': 'Pelajari selengkapnya tentang Levera'
+  'Tải app Levera để theo dõi đơn hàng, tích điểm':
+    'Unduh aplikasi Levera untuk melacak pesanan dan mendapatkan poin',
+  'Bạn đã có': 'Kamu punya',
+  'đơn hàng': 'memesan',
+  'đơn hàng > 2': 'pesanan',
+  'Tích luỹ': 'Akumulasi',
+  '5% giá trị mỗi đơn hàng': '5% nilai per pesanan',
+  'Tìm hiểu thêm về Levera': 'Pelajari selengkapnya tentang Levera',
 };

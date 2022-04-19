@@ -19,7 +19,11 @@ export default {
   'Tra cứu': 'Tra cứu',
   'Xác thực quyền truy cập': 'Xác thực quyền truy cập',
   'Tìm kiếm đơn hàng': 'Tìm kiếm đơn hàng',
-  'Tải ngay Levera để theo dõi toàn bộ đơn hàng':
-    'Tải ngay Levera để theo dõi toàn bộ đơn hàng',
+  'Tải app Levera để theo dõi đơn hàng, tích điểm':
+    'Tải app Levera để theo dõi đơn hàng, tích điểm',
+  'Bạn đã có': 'Bạn đã có',
+  'đơn hàng': 'đơn hàng',
+  'Tích luỹ': 'Tích luỹ',
+  '5% giá trị mỗi đơn hàng': '5% giá trị mỗi đơn hàng',
   'Tìm hiểu thêm về Levera': 'Tìm hiểu thêm về Levera'
 };
