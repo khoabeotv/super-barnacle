@@ -226,80 +226,103 @@ function Tracking(props) {
           </Modal>
         )} */}
 
-        {/* {locale == 'vi' && Math.floor(Math.random() * 100) < 0 && ( */}
-        <div className="footer-tracking">
-          <div className="footer-left">
-            <div>
-              <img src={width < 769 ? '/LOGOmd.svg' : '/LOGO.svg'} />
-            </div>
-            {width > 769 && (
-              <div
-                style={{
-                  width: 2,
-                  height: 46,
-                  background: '#d9d9d9',
-                  margin: '0 12px'
-                }}
-              />
-            )}
-            <div style={{ marginBottom: width > 769 ? 0 : 8 }}>
-              <div className="footer-title">
-                {i18n.t('Tải app Levera để theo dõi đơn hàng, tích điểm')}
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: width > 769 ? 'center' : 'start',
-                  flexDirection: width > 769 ? 'row' : 'column'
-                }}
-              >
-                <div
-                  className="footer-desc"
-                  style={{ marginRight: 16, marginBottom: width > 769 ? 0 : 8 }}
-                >
-                  {i18n.t('Bạn đã có')}:{' '}
-                  <span style={{ color: '#EB7E5A', fontWeight: 500 }}>
-                    13 {i18n.t('đơn hàng')}
-                  </span>
+        {locale == 'vi' &&
+          Math.floor(Math.random() * 100) < 20 &&
+          order.order_count > 2 && (
+            <div className="footer-tracking">
+              <div className="footer-left">
+                <div>
+                  <img src={width < 769 ? '/LOGOmd.svg' : '/LOGO.svg'} />
                 </div>
-                <div className="footer-desc">
-                  {i18n.t('Tích luỹ')}:{' '}
-                  <span style={{ color: '#EB7E5A', fontWeight: 500 }}>
-                    150.000đ{' '}
-                  </span>
-                  <span>({i18n.t('5% giá trị mỗi đơn hàng')})</span>
+                {width > 769 && (
+                  <div
+                    style={{
+                      width: 2,
+                      height: 46,
+                      background: '#d9d9d9',
+                      margin: '0 12px'
+                    }}
+                  />
+                )}
+                <div style={{ marginBottom: width > 769 ? 0 : 8 }}>
+                  <div className="footer-title">
+                    {i18n.t('Tải app Levera để theo dõi đơn hàng, tích điểm')}
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: width > 769 ? 'center' : 'start',
+                      flexDirection: width > 769 ? 'row' : 'column'
+                    }}
+                  >
+                    <div
+                      className="footer-desc"
+                      style={{
+                        marginRight: 16,
+                        marginBottom: width > 769 ? 0 : 8
+                      }}
+                    >
+                      {i18n.t('Bạn đã có')}:{' '}
+                      <span style={{ color: '#EB7E5A', fontWeight: 500 }}>
+                        {order.order_count} {i18n.t('đơn hàng')}
+                      </span>
+                    </div>
+                    <div className="footer-desc">
+                      {i18n.t('Tích luỹ')}:{' '}
+                      <span style={{ color: '#EB7E5A', fontWeight: 500 }}>
+                        {Intl.NumberFormat('vi-VN', {
+                          style: 'currency',
+                          currency: 'VND'
+                        }).format(order.levera_point)}{' '}
+                      </span>
+                      <span>({i18n.t('5% giá trị mỗi đơn hàng')})</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="footer-right">
-            {width > 769 && (
-              <div
-                style={{
-                  marginRight: 12
-                }}
-              >
-                <img src="/qrcode.gif" alt="" />
-              </div>
-            )}
-            {width < 769 ? (
-              <div>
-                {platform == 'Android' && (
-                  <div>
-                    <a href="https://play.google.com/store/apps/details?id=com.levera.pay.app&hl=en&gl=US">
-                      <img src="/googleplay.svg" alt="" />
-                    </a>
+              <div className="footer-right">
+                {width > 769 && (
+                  <div
+                    style={{
+                      marginRight: 12
+                    }}
+                  >
+                    <img src="/qrcode.gif" alt="" />
                   </div>
                 )}
-                {platform == 'iOS' && (
+                {width < 769 ? (
                   <div>
-                    <a href="https://apps.apple.com/vn/app/levera-pay/id1601450085?l=vi&fbclid=IwAR30J4-r9rkJQbjUU-25xqDEzYk5jtyJ5uCsGCgAs1eNamlZ_RGhlJqcYRg">
-                      <img src="/appstore.svg" alt="" />
-                    </a>
+                    {platform == 'Android' && (
+                      <div>
+                        <a href="https://play.google.com/store/apps/details?id=com.levera.pay.app&hl=en&gl=US">
+                          <img src="/googleplay.svg" alt="" />
+                        </a>
+                      </div>
+                    )}
+                    {platform == 'iOS' && (
+                      <div>
+                        <a href="https://apps.apple.com/vn/app/levera-pay/id1601450085?l=vi&fbclid=IwAR30J4-r9rkJQbjUU-25xqDEzYk5jtyJ5uCsGCgAs1eNamlZ_RGhlJqcYRg">
+                          <img src="/appstore.svg" alt="" />
+                        </a>
+                      </div>
+                    )}
+                    {platform == 'unknown' && (
+                      <>
+                        <div style={{ marginBottom: 8 }}>
+                          <a href="https://play.google.com/store/apps/details?id=com.levera.pay.app&hl=en&gl=US">
+                            <img src="/googleplay.svg" alt="" />
+                          </a>
+                        </div>
+                        <div>
+                          <a href="https://apps.apple.com/vn/app/levera-pay/id1601450085?l=vi&fbclid=IwAR30J4-r9rkJQbjUU-25xqDEzYk5jtyJ5uCsGCgAs1eNamlZ_RGhlJqcYRg">
+                            <img src="/appstore.svg" alt="" />
+                          </a>
+                        </div>
+                      </>
+                    )}
                   </div>
-                )}
-                {platform == 'unknown' && (
-                  <>
+                ) : (
+                  <div>
                     <div style={{ marginBottom: 8 }}>
                       <a href="https://play.google.com/store/apps/details?id=com.levera.pay.app&hl=en&gl=US">
                         <img src="/googleplay.svg" alt="" />
@@ -310,26 +333,11 @@ function Tracking(props) {
                         <img src="/appstore.svg" alt="" />
                       </a>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
-            ) : (
-              <div>
-                <div style={{ marginBottom: 8 }}>
-                  <a href="https://play.google.com/store/apps/details?id=com.levera.pay.app&hl=en&gl=US">
-                    <img src="/googleplay.svg" alt="" />
-                  </a>
-                </div>
-                <div>
-                  <a href="https://apps.apple.com/vn/app/levera-pay/id1601450085?l=vi&fbclid=IwAR30J4-r9rkJQbjUU-25xqDEzYk5jtyJ5uCsGCgAs1eNamlZ_RGhlJqcYRg">
-                    <img src="/appstore.svg" alt="" />
-                  </a>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        {/* )} */}
+            </div>
+          )}
       </div>
     </>
   );
