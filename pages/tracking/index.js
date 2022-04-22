@@ -226,10 +226,10 @@ function Tracking(props) {
           </Modal>
         )}
 
-        {(locale == 'vi' &&
+        {locale == 'vi' &&
           Math.floor(Math.random() * 100) < 20 &&
-          order.order_count > 2) ||
-          (order.levera_point < 1000000 && (
+          order.order_count > 2 &&
+          order.levera_point < 1000000 && (
             <div className="footer-tracking">
               <div className="footer-left">
                 <div>
@@ -338,7 +338,7 @@ function Tracking(props) {
                 )}
               </div>
             </div>
-          ))}
+          )}
       </div>
     </>
   );
