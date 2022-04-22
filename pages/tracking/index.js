@@ -149,7 +149,7 @@ function Tracking(props) {
           <div className="header-title">{i18n.t('Theo dõi đơn hàng')}</div>
         </div>
 
-        {/* {order.require_phone_number && (
+        {order.require_phone_number && (
           <Modal
             title={renderTitle()}
             wrapClassName="tracking-modal"
@@ -224,11 +224,12 @@ function Tracking(props) {
               </div>
             )}
           </Modal>
-        )} */}
+        )}
 
-        {locale == 'vi' &&
+        {(locale == 'vi' &&
           Math.floor(Math.random() * 100) < 20 &&
-          order.order_count > 2 && (
+          order.order_count > 2) ||
+          (order.levera_point < 1000000 && (
             <div className="footer-tracking">
               <div className="footer-left">
                 <div>
@@ -337,7 +338,7 @@ function Tracking(props) {
                 )}
               </div>
             </div>
-          )}
+          ))}
       </div>
     </>
   );
