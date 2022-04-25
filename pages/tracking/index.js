@@ -148,7 +148,216 @@ function Tracking(props) {
         <div className="header-tracking">
           <div className="header-title">{i18n.t('Theo dõi đơn hàng')}</div>
         </div>
-
+        <div className="tracking-rows">
+          {!order.require_phone_number && (
+            <>
+              <div className="tracking-col">
+                <div className="tracking-card">
+                  <div className="tracking-box">
+                    <div className="tracking-header">
+                      {i18n.t(shopInfo.title)}
+                    </div>
+                    <div className="tracking-body">
+                      {width < 769 ? (
+                        <div>
+                          <div className="tracking-item">
+                            <div className="tracking-label">
+                              {i18n.t('Tên shop')}
+                            </div>
+                            <div className="tracking-value">
+                              {order.shop_name}
+                            </div>
+                          </div>
+                          {/* <div className="tracking-item">
+                        <div className="tracking-value">
+                          <div className="tracking-value">
+                            {currenShopInfo.rating_customer}/5{' '}
+                            <StarFilled style={{ color: '#FFC53D' }} />
+                          </div>
+                        </div>
+                        <div className="tracking-value">
+                          {currenShopInfo.total_order} đơn (
+                          {currenShopInfo.success_orders}%){' '}
+                          <CheckCircleFilled style={{ color: '#27AE60' }} />
+                        </div>
+                      </div> */}
+                        </div>
+                      ) : (
+                        <div className="tracking-list">
+                          {shopInfo.items.map((item) => {
+                            let value = order[item.value];
+                            return (
+                              <div className="tracking-item" key={item.value}>
+                                <div className="tracking-label">
+                                  {i18n.t(item.label)}
+                                </div>
+                                {item.value == 'rating_customer' ? (
+                                  <div className="tracking-value">
+                                    {value}/5{' '}
+                                    <StarFilled style={{ color: '#FFC53D' }} />
+                                  </div>
+                                ) : (
+                                  <div className="tracking-value">{value}</div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="tracking-card">
+                  <div className="tracking-box">
+                    <div className="tracking-header">
+                      {i18n.t(orderInfo.title)}
+                    </div>
+                    <div className="tracking-body">
+                      <div className="tracking-list">
+                        {orderInfo.items.map((item) => {
+                          let value = order[item.value];
+                          return (
+                            <div className="tracking-item" key={item.value}>
+                              <div className="tracking-label">
+                                {i18n.t(item.label)}
+                              </div>
+                              {item.value == 'extend_code' ? (
+                                <Copy copyText={value}>
+                                  <CopyOutlined />
+                                  <span
+                                    style={{ marginLeft: '9.71px' }}
+                                    className="tracking-value"
+                                  >
+                                    {value}
+                                  </span>
+                                </Copy>
+                              ) : item.value == 'inserted_at' ? (
+                                <div className="tracking-value">
+                                  {formatDateTime(value, true)}
+                                </div>
+                              ) : (
+                                <div className="tracking-value">{value}</div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="tracking-card">
+                  <div className="tracking-box">
+                    <div className="tracking-header">
+                      {i18n.t(customerInfo.title)}
+                    </div>
+                    <div className="tracking-body">
+                      <div className="tracking-list">
+                        {customerInfo.items.map((item) => {
+                          let value = order[item.value];
+                          return (
+                            <div className="tracking-item" key={item.value}>
+                              <div
+                                className="tracking-label"
+                                style={{
+                                  whiteSpace: item?.styles
+                                    ? item?.styles?.label?.mobile?.whiteSpace
+                                    : 'unset'
+                                }}
+                              >
+                                {i18n.t(item.label)}
+                              </div>
+                              {item.value == 'rating_customer' ? (
+                                <div className="tracking-value">
+                                  {value}/5{' '}
+                                  <StarFilled style={{ color: '#FFC53D' }} />
+                                </div>
+                              ) : (
+                                <div className="tracking-value">{value}</div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="tracking-col">
+                <div className="tracking-card">
+                  <div className="tracking-box">
+                    <div className="tracking-header">
+                      {i18n.t('Trạng thái đơn hàng')}
+                    </div>
+                    <div
+                      className="tracking-body"
+                      style={{ padding: '16px 24px', flex: 1, height: '100%' }}
+                    >
+                      <Timeline className="tracking-timeline" mode="left">
+                        {order.extend_update.map((item, index) => {
+                          const active = index == 0;
+                          return (
+                            <TimelineItem
+                              color={active ? 'green' : ''}
+                              key={`${item.status}${index}`}
+                            >
+                              <div>
+                                <div
+                                  className="tracking-status"
+                                  style={{
+                                    color: active
+                                      ? 'rgba(0, 0, 0, 0.65)'
+                                      : 'rgba(0, 0, 0, 0.45)'
+                                  }}
+                                >
+                                  {item.status}
+                                </div>
+                                {item.note && (
+                                  <div
+                                    className="tracking-note"
+                                    style={{
+                                      color: active
+                                        ? 'rgba(0, 0, 0, 0.65)'
+                                        : 'rgba(0, 0, 0, 0.45)'
+                                    }}
+                                  >
+                                    {item.note}
+                                  </div>
+                                )}
+                                {item.location && (
+                                  <div
+                                    className="tracking-note"
+                                    style={{
+                                      color: active
+                                        ? 'rgba(0, 0, 0, 0.65)'
+                                        : 'rgba(0, 0, 0, 0.45)'
+                                    }}
+                                  >
+                                    {item.location}
+                                  </div>
+                                )}
+                                <div
+                                  style={{
+                                    fontSize: '16px',
+                                    lineHeight: '1.5',
+                                    color: active
+                                      ? 'rgba(0, 0, 0, 0.65)'
+                                      : 'rgba(0, 0, 0, 0.45)'
+                                  }}
+                                >
+                                  {formatDateTime(item.updated_at, true)}
+                                </div>
+                              </div>
+                            </TimelineItem>
+                          );
+                        })}
+                      </Timeline>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
         {order.require_phone_number && (
           <Modal
             title={renderTitle()}
