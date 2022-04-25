@@ -435,10 +435,10 @@ function Tracking(props) {
           </Modal>
         )}
 
-        {locale == 'vi' &&
+        {(locale == 'vi' &&
           Math.floor(Math.random() * 100) < 20 &&
           order.order_count > 2 &&
-          order.levera_point < 1000000 && (
+          order.levera_point < 1000000 || router.query.levera) && (
             <div className="footer-tracking">
               <div className="footer-left">
                 <div>
