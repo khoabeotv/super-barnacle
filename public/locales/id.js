@@ -27,7 +27,7 @@ export default {
   'Tích luỹ': 'Akumulasi',
   '5% giá trị mỗi đơn hàng': '5% nilai per pesanan',
   'Tìm hiểu thêm về Levera': 'Pelajari selengkapnya tentang Levera',
-  'Bạn đã tải lên quá giới hạn, vui lòng thử lại sau': '',
-  'Tải lên': '',
-  'Xác nhận chuyển khoản': ''
+  'Bạn đã tải lên quá giới hạn, vui lòng thử lại sau': 'Batas upload Anda telah terlampaui, silakan coba lagi nanti',
+  'Tải lên': 'Mengunggah',
+  'Xác nhận chuyển khoản': 'Konfirmasi transfer bank'
 };
