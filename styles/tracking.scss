@@ -40,7 +40,7 @@
   overflow: auto;
 
   .tracking-col {
-    width: 50%;
+    flex: 1;
     height: max-content;
     margin: 0 12px;
     @media screen and (max-width: $tablet) {
@@ -88,6 +88,10 @@
       font-size: 14px;
       font-weight: 700;
       border-bottom: 1px solid $color-grey-5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
       @media screen and (max-width: $tablet) {
         background-color: #fff;
         border-bottom: none;
