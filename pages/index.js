@@ -32,7 +32,7 @@ export default function Home() {
 
     if (query.current.cid && query.current.pid) {
       axios
-        .get(`${API_BASE}/info`, {
+        .get(`${API_BASE}/barnacle/info`, {
           params: { cid: query.current.cid, pid: query.current.pid }
         })
         .then((res) => {
@@ -63,7 +63,7 @@ export default function Home() {
   const checkFBName = () => {
     setValid('');
     axios
-      .get(`${API_BASE}/fbname`, {
+      .get(`${API_BASE}/barnacle/fbname`, {
         params: { name: info.full_name, pid: query.current.pid }
       })
       .then((res) => {
@@ -76,7 +76,7 @@ export default function Home() {
     if (submitLoading) return;
     setSubmitLoading(true);
     axios
-      .post(`${API_BASE}/create`, {
+      .post(`${API_BASE}/barnacle/create`, {
         cid: query.current.cid,
         pid: query.current.pid,
         info,

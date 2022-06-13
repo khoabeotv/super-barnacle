@@ -26,5 +26,8 @@ export default {
   'đơn hàng > 2': 'orders',
   'Tích luỹ': 'Accumulation',
   '5% giá trị mỗi đơn hàng': '5% value per order',
-  'Tìm hiểu thêm về Levera': 'Learn more about Levera'
+  'Tìm hiểu thêm về Levera': 'Learn more about Levera',
+  'Bạn đã tải lên quá giới hạn, vui lòng thử lại sau': 'Your upload limit has been exceeded, please try again later',
+  'Tải lên': 'Upload',
+  'Xác nhận chuyển khoản': 'Bank transfer confirmation'
 };
