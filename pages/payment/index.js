@@ -1,93 +1,54 @@
-import { EnvironmentOutlined, CreditCardOutlined, PhoneOutlined, GlobalOutlined } from '@ant-design/icons';
-import { Radio, Space, Modal, Timeline, Spin, Tooltip } from 'antd';
-import TimelineItem from 'antd/lib/timeline/TimelineItem';
+import { EnvironmentOutlined, CreditCardOutlined, PhoneOutlined, GlobalOutlined, LoadingOutlined, SkinOutlined } from '@ant-design/icons';
+import { Radio, Space, Spin, Tooltip, Avatar } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import React, { useState, useEffect } from 'react';
-import OtpInput from 'react-otp-input';
-import { formatDateTime } from 'utils';
-import Copy from '../../components/Copy';
-import { useDeviceSize } from '../../hooks/useDeviceSize';
-import i18n, { getTranslation, startI18n } from '../../i18n';
-import { getLangFromCountryCode, getMobileOperatingSystem } from '../../utils';
+import { formatNumber } from 'utils';
 
-const getData = (id, phone_number) => {
+const getData = (id) => {
+  id = "/Rvbxa6ML7D5pVFOvlr1H8joNqm1s5vo95TkfjyPTQxUPcFpz2Kv/MLg"
   return axios
-    .get(`${API_BASE}/payment`, {
-      params: { id, phone_number }
-    })
+    .post(`${API_BASE}/barnacle/payment_info`, { id })
     .then((res) => res.data)
-    .catch(() => ({ success: false, require_phone_number: true }));
+    .catch(() => false);
 };
 
-function Payment(props) {
+function Payment() {
   const router = useRouter();
-  const [width] = useDeviceSize();
-  const [fourDigitsPhone, setFourDigitsPhone] = useState('');
-  const [verifyOTP] = useState(true);
   const [loading, setLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
   const [order, setOrder] = useState();
-  const [platform, setPlatform] = useState('unknown');
-  const [locale, setLocale] = useState('');
   const [method, changeMethod] = useState('momo');
 
   useEffect(async () => {
     if (router.query.id) {
       const data = await getData(router.query.id);
-      const locale = getLangFromCountryCode(data?.country_code);
-      const trans = await getTranslation(locale);
-      setLocale(locale);
-      startI18n(trans, locale);
       setOrder(data);
       setDataLoading(false);
-      setPlatform(getMobileOperatingSystem());
     }
   }, [router.query]);
 
-  const productData = [
-    {
-      name: 'Massage Oil Bottling Plastic 270ML Beauty Salon Use Essential Oil',
-      retail_price: '100.000 d',
-      quantity: 2,
-      total: '200.000 d',
-      attribute: [
-        { name: 'Color', value: 'Eggplant' },
-        { name: 'Size', value: 'S' }
-      ]
-    },
-    {
-      name: 'Massage Oil Bottling Plastic 270ML Beauty Salon Use Essential Oil',
-      retail_price: '100.000 d',
-      quantity: 2,
-      total: '200.000 d',
-      attribute: [
-        { name: 'Color', value: 'Eggplant' },
-        { name: 'Size', value: 'S' }
-      ]
-    },
-    {
-      name: 'Massage Oil Bottling Plastic 270ML Beauty Salon Use Essential Oil',
-      retail_price: '100.000 d',
-      quantity: 2,
-      total: '200.000 d',
-      attribute: [
-        { name: 'Color', value: 'Eggplant' },
-        { name: 'Size', value: 'S' }
-      ]
-    },
-    {
-      name: 'Massage Oil Bottling Plastic 270ML Beauty Salon Use Essential Oil',
-      retail_price: '100.000 d',
-      quantity: 2,
-      total: '200.000 d',
-      attribute: [
-        { name: 'Color', value: 'Eggplant' },
-        { name: 'Size', value: 'S' }
-      ]
+  const handleClickPayment = () => {
+    const url = `${API_BASE}/barnacle/handle_payment`;
+    const params = {
+      method: method,
+      id: order.key,
+      amount: order.cod,
     }
-  ]
+
+    return axios
+      .post(url, params)
+      .then(res => {
+        console.log('res: ', res);
+
+      })
+  }
+
+  if (dataLoading)
+    return (
+      <Spin indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
+    );
 
   return (
     <>
@@ -119,7 +80,7 @@ function Payment(props) {
           <img style={{ width: 99, height: 24 }} src="pancake_logo.svg" />
           <div className="header-title">{'Thanh toán đơn hàng'}</div>
         </div>
-        <div className="payment-content">
+        {order && <div className="payment-content">
           <div className='container'>
             <div className='delivery-address'>
               <div className='title'>
@@ -128,12 +89,12 @@ function Payment(props) {
               </div>
               <div className='body-text'>
                 <div style={{ height: 22, display: 'flex' }}>
-                  <div className='name'>{'Nguyễn Đức Phúc'}</div>
+                  <div className='name'>{order.bill_full_name}</div>
                   <div className='bulk-head' />
-                  <div>{'(+33)7 00 55 55 11'}</div>
+                  <div>{order.bill_phone_number}</div>
                 </div>
                 <div className='address-text'>
-                  {'15 Changi Business Park Cres Singapore'}
+                  {order.address}
                 </div>
               </div>
             </div>
@@ -141,7 +102,6 @@ function Payment(props) {
           <div className='container'>
             <div className='product-info'>
               <div className='title'>
-                {/* <ShoppingCartOutlined style={{ fontSize: 16, marginTop: 2 }} /> */}
                 <img style={{ width: 16, height: 16, marginTop: 2 }} src="/package.svg" />
                 <div className='text'>{'Sản phẩm'}</div>
               </div>
@@ -152,11 +112,14 @@ function Payment(props) {
                 <div className='text-header'>{'Thành tiền'}</div>
               </div>
               <div>
-                {productData.map(item => (
+                {order.items.length > 0 && order.items.map(item => (
                   <div className='item-product'>
                     <div className='text-header large' style={{ display: 'flex' }}>
                       <div style={{ marginTop: 2 }}>
-                        <img style={{ width: 40, height: 40 }} />
+                        {item.images?.length
+                          ? <img style={{ width: 40, height: 40 }} src={item.images?.length && item.images[0]} />
+                          : <Avatar shape="square" size={40} icon={<SkinOutlined />} />
+                        }
                       </div>
                       <div style={{ marginLeft: 12 }}>
                         <div className='attribute-text product-name'>
@@ -164,39 +127,39 @@ function Payment(props) {
                             {item.name}
                           </Tooltip>
                         </div>
-                        <div style={{ height: 20 }}>
-                          {item.attribute.map((i, idx) => (
+                        {item.fields?.length > 0 && <div style={{ height: 20 }}>
+                          {item.fields.map((i, idx) => (
                             <>
                               <span className='attribute-text'>{i.name}:</span>
                               <span className='attribute-element'>{i.value}</span>
-                              {idx != (item.attribute.length - 1) && <span style={{ margin: '0 3px' }}>;</span>}
+                              {idx != (item.fields.length - 1) && <span style={{ margin: '0 3px' }}>;</span>}
                             </>
                           ))}
-                        </div>
+                        </div>}
                       </div>
                     </div>
-                    <div className='text-header'>{item.retail_price}</div>
+                    <div className='text-header'>{formatNumber(item.retail_price)}</div>
                     <div className='text-header'>{item.quantity}</div>
-                    <div className='text-header'>{item.total}</div>
+                    <div className='text-header'>{formatNumber(item.retail_price * item.quantity)}</div>
                   </div>
                 ))}
               </div>
               <div className='table-footer'>
                 <div className='footer-element'>
-                  <div className='label'>{'Tổng tiền hàng'}</div>
-                  <div className='value'>{'550.000 đ'}</div>
+                  <div className='label'>{'Giảm giá'}</div>
+                  <div className='value'>{formatNumber(order.total_discount)}</div>
                 </div>
                 <div className='footer-element'>
                   <div className='label'>{'Phí vận chuyển'}</div>
-                  <div className='value'>{'30.000 đ'}</div>
+                  <div className='value'>{formatNumber(order.shipping_fee)}</div>
                 </div>
                 <div className='footer-element'>
                   <div className='label'>{'Đã thanh toán'}</div>
-                  <div className='value'>{'100.000 đ'}</div>
+                  <div className='value'>{formatNumber(order.prepaid)}</div>
                 </div>
                 <div className='footer-element'>
                   <div className='label'>{'Tổng thanh toán'}</div>
-                  <div className='total'>{'420.000 đ'}</div>
+                  <div className='total'>{formatNumber(order.cod)}</div>
                 </div>
               </div>
             </div>
@@ -222,13 +185,13 @@ function Payment(props) {
                 </Radio.Group>
               </div>
               <div className='payment-button'>
-                <div className='button'>
+                <div className='button' onClick={handleClickPayment}>
                   {'Thanh toán'}
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div>}
         <div className="footer-payment">
           <div className='content'>
             <div className='contact'>

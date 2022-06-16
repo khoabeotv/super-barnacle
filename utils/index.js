@@ -116,3 +116,42 @@ export const getMobileOperatingSystem = () => {
 
   return 'unknown';
 };
+
+export const intCurrencyList = ['VND', 'TWD', 'LAK', 'PHP', 'MMK', 'JPY'];
+export const currencyPrefixList = ['TWD', 'USD', 'JPY', 'PHP'];
+export const xctCurrencyList = ['IDR', 'KRW']; // Danh sách không hiển thị phần thập phân nếu là 00
+export const dotList = ['USD', 'TWD', 'JPY', 'PHP', 'THB', 'MYR'];
+
+export const getFloatChar = currency => (dotList.includes(currency) ? '.' : ',');
+
+export const formatNumber = (value, currency = 'VND', prefix = true) => {
+  const floatChar = getFloatChar(currency);
+  value = value ? value.toString() : '0';
+  if (value.includes(floatChar) && value.indexOf(floatChar) > value.length - 3) return value;
+  let minusChar = parseInt(value) < 0 ? '-' : '';
+  let amount = Math.abs(parseInt(value)) || 0;
+  amount = amount
+    ? !intCurrencyList.includes(currency) && typeof currency != 'undefined' && currency
+      ? `${Math.floor(amount / 100)
+        .toString()
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, `$1${floatChar == '.' ? ',' : '.'}`)}${Math.abs(amount) % 100
+          ? prefix
+            ? floatChar + (Math.abs(amount) % 100 > 9 ? Math.abs(amount) % 100 : '0' + (Math.abs(amount) % 100))
+            : floatChar +
+            ((Math.abs(amount) % 100) % 10
+              ? Math.abs(amount) % 100 > 9
+                ? Math.abs(amount) % 100
+                : '0' + (Math.abs(amount) % 100)
+              : Math.floor((Math.abs(amount) % 100) / 10))
+          : prefix && !xctCurrencyList.includes(currency)
+            ? `${floatChar}00`
+            : ''
+      }`
+      : amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, `$1${floatChar == '.' ? ',' : '.'}`)
+    : amount;
+  if (typeof currency != 'undefined' && prefix)
+    return currencyPrefixList.includes(currency)
+      ? 'đ' + ' ' + minusChar + amount
+      : minusChar + amount + ' ' + 'đ';
+  else return minusChar + amount;
+};
