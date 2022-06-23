@@ -7,7 +7,6 @@ import React, { useState, useEffect } from 'react';
 import { formatNumber } from 'utils';
 
 const getData = (id) => {
-  id = "/Rvbxa6ML7D5pVFOvlr1H8joNqm1s5vo95TkfjyPTQxUPcFpz2Kv/MLg"
   return axios
     .post(`${API_BASE}/barnacle/payment_info`, { id })
     .then((res) => res.data)
@@ -16,7 +15,6 @@ const getData = (id) => {
 
 function Payment() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
   const [order, setOrder] = useState();
   const [method, changeMethod] = useState('momo');
@@ -80,7 +78,12 @@ function Payment() {
           <img style={{ width: 99, height: 24 }} src="pancake_logo.svg" />
           <div className="header-title">{'Thanh toán đơn hàng'}</div>
         </div>
-        {order && <div className="payment-content">
+        {!order.session &&
+          <div className="payment-content payment-out-session">
+            {"Phiên thanh toán đã hết hạn. Vui lòng liên hệ lại cửa hàng để gửi lại link thanh toán!!!"}
+          </div>
+        }
+        {order && order.session && <div className="payment-content">
           <div className='container'>
             <div className='delivery-address'>
               <div className='title'>
