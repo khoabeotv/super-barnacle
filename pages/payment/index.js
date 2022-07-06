@@ -1,5 +1,5 @@
 import { EnvironmentOutlined, CreditCardOutlined, PhoneOutlined, GlobalOutlined, LoadingOutlined, SkinOutlined } from '@ant-design/icons';
-import { Radio, Space, Spin, Tooltip, Avatar } from 'antd';
+import { Radio, Space, Spin, Tooltip, Avatar, message } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -38,8 +38,11 @@ function Payment() {
     return axios
       .post(url, params)
       .then(res => {
-        console.log('res: ', res);
-
+        if (res.data.success) {
+          window.location.replace(res.data.url)
+        } else {
+          message.error(res.data?.message || "Có lỗi xảy ra! Vui lòng thử lại")
+        }
       })
   }
 
