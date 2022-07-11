@@ -14,6 +14,16 @@
   padding: 14px 120px;
   height: 52px;
   background: #506DAD;
+  @media screen and (max-width: $tablet) {
+    height: 56px;
+    padding: 0px;
+  }
+
+  .image {
+    @media screen and (max-width: $tablet) {
+      display: none;
+    }
+  }
 
   .header-title {
     width: 954px;
@@ -23,6 +33,10 @@
     line-height: 24px;
     color: #FFFFFF;
     text-align: center;
+
+    @media screen and (max-width: $tablet) {
+      width: 100%;
+    }
   }
 }
 
@@ -39,11 +53,18 @@
   height: 100%;
   margin-top: 24px;
   overflow: auto;
+  @media screen and (max-width: $tablet) {
+    margin-top: 0px;
+    background-color: #f0f0f0;
+  }
 
   .container {
     display: flex;
     justify-content: center;
     width: 100%;
+    @media screen and (max-width: $tablet) {
+      margin-bottom: 6px;
+    }
   }
 
   .title {
@@ -55,6 +76,20 @@
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 
+    @media screen and (max-width: $tablet) {
+      border: 0;
+      background: #FFF;
+      height: 20px;
+      padding: 16px 10px;
+      border-radius: 0px;
+    }
+
+    .icon {
+      @media screen and (max-width: $tablet) {
+        display: none;
+      }
+    }
+
     .text {
       font-weight: 700;
       font-size: 14px;
@@ -63,6 +98,15 @@
       align-items: center;
       margin-left: 10px;
       color: rgba(0, 0, 0, 0.65);
+
+      @media screen and (max-width: $tablet) {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 20px;
+        color: rgba(0, 0, 0, 0.45);
+        text-transform: uppercase;
+        margin-top: 8px;
+      }
     }
   }
 
@@ -72,20 +116,34 @@
     border: 1px solid #D9D9D9;
     border-radius: 8px;
 
+    @media screen and (max-width: $tablet) {
+      border: 0;
+      border-radius: 0px;
+    }
+
     .body-text {
-      height: 76px;
       padding: 12px 24px;
       background: #FFFFFF;
       width: 100%;
       border-radius: 8px;
+
+      @media screen and (max-width: $tablet) {
+        border: 0;
+        border-radius: 0px;
+        padding: 10px 24px 12px 24px;
+      }
 
       .name {
         font-weight: 700;
         font-size: 14px;
         line-height: 22px;
         color: #000000;
-      }
 
+        @media screen and (max-width: $tablet) {
+          color: rgba(0, 0, 0, 0.65);
+          font-weight: 500;
+        }
+      }
       .bulk-head {
         border-right: 1px solid #BFBFBF;
         margin: 0 15px;
@@ -112,12 +170,22 @@
     border: 1px solid #D9D9D9;
     border-radius: 8px;
 
+    @media screen and (max-width: $tablet) {
+      margin-top: 0px;
+      font-weight: 400;
+      border: 0px;
+      border-radius: 0px;
+    }
+
     .table-header {
       padding: 9px 24px;
       height: 40px;
       background: #FFFFFF;
       border-bottom: 1px solid #D9D9D9;
       display: flex;
+      @media screen and (max-width: $tablet) {
+        display: none;
+      }
 
       .text-header {
         font-weight: 500;
@@ -134,52 +202,113 @@
       }
     }
 
-    .item-product {
-      display: flex;
-      align-items: center;
-      padding: 8px 24px;
-      border-bottom: 1px dashed #D9D9D9;
-
-      .text-header {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 22px;
-        text-align: right;
-        color: #595959;
-        width: 20%;
+    .list-items-product {
+      @media screen and (max-width: $tablet) {
+        display: none;
       }
 
-      .large {
-        width: 50%;
-        text-align: left;
+      .item-product {
+        display: flex;
+        align-items: center;
+        padding: 8px 24px;
+        border-bottom: 1px dashed #D9D9D9;
+  
+        .text-header {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 22px;
+          text-align: right;
+          color: #595959;
+          width: 20%;
+        }
+  
+        .large {
+          width: 50%;
+          text-align: left;
+        }
+  
+        .attribute-text {
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 22px;
+          color: rgba(0, 0, 0, 0.65);
+        }
+  
+        .attribute-element {
+          font-weight: 700;
+          font-size: 12px;
+          line-height: 20px;
+          color: #595959;
+          margin-left: 3px;
+        }
+  
+        .product-name {
+          font-size: 14px;
+          max-width: 385px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    .list-items-product-mobile {
+      @media screen and (min-width: $tablet) {
+        display: none;
       }
 
-      .attribute-text {
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 22px;
-        color: rgba(0, 0, 0, 0.65);
-      }
+      @media screen and (max-width: $tablet) {
+        padding: 0px 21px;
+        background-color: #FFFFFF;
 
-      .attribute-element {
-        font-weight: 700;
-        font-size: 12px;
-        line-height: 20px;
-        color: #595959;
-        margin-left: 3px;
-      }
+        .product-items {
+          display: flex;
+          border-bottom: 1px dashed #D9D9D9;
+          padding-bottom: 12px;
+          padding-top: 12px;
+        }
 
-      .product-name {
-        font-size: 14px;
-        max-width: 385px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        .image {
+          border: 1px solid #F0F0F0;
+          border-radius: 4px;
+        }
+
+        .info {
+          margin-left: 12px;
+          width: 100%;
+
+          .product-name {
+            max-width: 255px;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            height: 22px;
+          }
+
+          .attribute-text {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 22px;
+            color: rgba(0, 0, 0, 0.65);
+          }
+    
+          .attribute-element {
+            font-weight: 700;
+            font-size: 12px;
+            line-height: 20px;
+            color: #595959;
+            margin-left: 3px;
+          }
+        }
       }
     }
 
     .table-footer {
       padding: 12px 24px;
+      @media screen and (max-width: $tablet) {
+        background-color: #FFF;
+      }
 
       .footer-element {
         display: flex;
@@ -188,6 +317,9 @@
         padding: 5px 0px;
         height: 32px;
         width: 100%;
+        @media screen and (max-width: $tablet) {
+          justify-content: space-between;
+        }
       }
 
       .label {
@@ -227,6 +359,14 @@
     margin-bottom: 24px;
     border: 1px solid #D9D9D9;
     border-radius: 8px;
+    @media screen and (max-width: $tablet) {
+      width: 100%;
+      margin-top: 0px;
+      border: 0px;
+      border-radius: 0px;
+      background-color: #FFF;
+      margin-bottom: 0px;
+    }
 
     .payment-select {
       padding: 16px 24px;
@@ -260,6 +400,9 @@
         font-size: 16px;
         line-height: 24px;
         cursor: pointer;
+        @media screen and (max-width: $tablet) {
+          width: 100%;
+        }
       }
     }
   }
@@ -268,6 +411,9 @@
 .footer-payment {
   padding: 16px 100px;
   background: #F0F0F0;
+  @media screen and (max-width: $tablet) {
+    display: none;
+  }
 
   .content {
     display: flex;

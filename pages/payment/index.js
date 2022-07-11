@@ -39,7 +39,8 @@ function Payment() {
       .post(url, params)
       .then(res => {
         if (res.data.success) {
-          window.location.replace(res.data.url)
+          if (res.data.is_mobile) window.location = res.data.url
+          else window.location.replace(res.data.url)
         } else {
           message.error(res.data?.message || "Có lỗi xảy ra! Vui lòng thử lại")
         }
@@ -78,7 +79,7 @@ function Payment() {
       ) : null}
       <div className="payment-container">
         <div className="header-payment">
-          <img style={{ width: 99, height: 24 }} src="pancake_logo.svg" />
+          <img className='image' style={{ width: 99, height: 24 }} src="pancake_logo.svg" />
           <div className="header-title">{'Thanh toán đơn hàng'}</div>
         </div>
         {!order.session &&
@@ -90,7 +91,7 @@ function Payment() {
           <div className='container'>
             <div className='delivery-address'>
               <div className='title'>
-                <EnvironmentOutlined style={{ fontSize: 16, marginTop: 2 }} />
+                <EnvironmentOutlined className='icon' style={{ fontSize: 16, marginTop: 2 }} />
                 <div className='text'>{'Thông tin nhận hàng'}</div>
               </div>
               <div className='body-text'>
@@ -108,7 +109,7 @@ function Payment() {
           <div className='container'>
             <div className='product-info'>
               <div className='title'>
-                <img style={{ width: 16, height: 16, marginTop: 2 }} src="/package.svg" />
+                <img className='icon' style={{ width: 16, height: 16, marginTop: 2 }} src="/package.svg" />
                 <div className='text'>{'Sản phẩm'}</div>
               </div>
               <div className='table-header'>
@@ -117,7 +118,7 @@ function Payment() {
                 <div className='text-header'>{'Số lượng'}</div>
                 <div className='text-header'>{'Thành tiền'}</div>
               </div>
-              <div>
+              <div className='list-items-product'>
                 {order.items.length > 0 && order.items.map(item => (
                   <div className='item-product'>
                     <div className='text-header large' style={{ display: 'flex' }}>
@@ -150,6 +151,42 @@ function Payment() {
                   </div>
                 ))}
               </div>
+              <div className='list-items-product-mobile'>
+                {order.items.length > 0 && order.items.map(item => (
+                  <div className='product-items'>
+                    <div className='image'>
+                      {item.images?.length
+                        ? <img style={{ width: 68, height: 68 }} src={item.images?.length && item.images[0]} />
+                        : <Avatar shape="square" size={68} icon={<SkinOutlined />} />}
+                    </div>
+                    <div className='info'>
+                      <div className='product-name'>
+                        <Tooltip className='product-name' title={item.name}>
+                          {item.name}
+                        </Tooltip>
+                      </div>
+                      {item.fields?.length > 0 && <div style={{ marginTop: -5 }}>
+                        {item.fields.map((i, idx) => (
+                          <>
+                            <span className='attribute-text'>{i.name}:</span>
+                            <span className='attribute-element'>{i.value}</span>
+                            {idx != (item.fields.length - 1) && <span style={{ margin: '0 3px' }}>;</span>}
+                          </>
+                        ))}
+                      </div>}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+                        <div style={{ display: 'flex'}}>
+                          <div style={{ fontWeight: 400 }}>{formatNumber(item.retail_price)}</div>&nbsp;x&nbsp;
+                          <div style={{ fontWeight: 700 }}>{item.quantity}</div>
+                        </div>
+                        <div>
+                          <div style={{ fontWeight: 700 }}>{formatNumber(item.retail_price * item.quantity)}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
               <div className='table-footer'>
                 <div className='footer-element'>
                   <div className='label'>{'Giảm giá'}</div>
@@ -173,7 +210,7 @@ function Payment() {
           <div className='container'>
             <div className='payment-method'>
               <div className='title'>
-                <CreditCardOutlined style={{ fontSize: 16, marginTop: 2 }} />
+                <CreditCardOutlined className='icon' style={{ fontSize: 16, marginTop: 2 }} />
                 <div className='text'>{'Phương thức thanh toán'}</div>
               </div>
               <div className='payment-select'>
@@ -206,7 +243,7 @@ function Payment() {
               <div className='text-footer'>
                 <PhoneOutlined />
                 <div style={{ color: 'rgba(0, 0, 0, 0.65)', margin: 5 }}>{'Hotline'}:</div>
-                <div style={{ color: '#1890FF' }}>{'096 781 5129'}</div>
+                <div style={{ color: '#1890FF' }}>{'1900.888.619 / 096.781.5129'}</div>
               </div>
               <div className='text-footer' style={{ marginLeft: 20 }}>
                 <GlobalOutlined />
@@ -219,11 +256,11 @@ function Payment() {
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div className='support-text'>Copyright © 2020 Pancake</div>
-              <div className='app-mobile'>
+              <div className='support-text'>Copyright © 2022 Pancake</div>
+              {/* <div className='app-mobile'>
                 <img style={{ width: 118, height: 30, marginRight: 10 }} src="/app_store.svg" />
                 <img style={{ width: 118, height: 30 }} src="/apple_store.svg" />
-              </div>
+              </div> */}
             </div>
           </div>          
         </div>
