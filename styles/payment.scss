@@ -45,6 +45,9 @@
   justify-content: center;
   color: red;
   font-size: 20px;
+  @media screen and (max-width: $tablet) {
+    padding: 20px;
+  }
 }
 
 .payment-content {
