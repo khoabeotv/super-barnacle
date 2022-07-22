@@ -218,7 +218,7 @@ function Payment() {
                   <Space direction="vertical">
                     <Radio value={'momo'}>
                       <img style={{ width: 20, height: 20 }} src="/momo_icon.svg" />
-                      <span className='text'>{'Thanh toán bằng Momo'}</span>
+                      <span className='text'>{'Thanh toán bằng Ví MoMo'}</span>
                     </Radio>
                     <Radio value={'vnpay'} style={{ marginTop: 5 }}>
                       <img style={{ width: 20, height: 20 }} src="/vnpay_icon.svg" />
