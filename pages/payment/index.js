@@ -42,7 +42,7 @@ function Payment() {
           if (res.data.is_mobile) window.location = res.data.url
           else window.location.replace(res.data.url)
         } else {
-          message.error(res.data?.message || "Có lỗi xảy ra! Vui lòng thử lại")
+          message.error(res.data?.response?.message || res.data?.message || "Có lỗi xảy ra! Vui lòng thử lại")
         }
       })
   }
